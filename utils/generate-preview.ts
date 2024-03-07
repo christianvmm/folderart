@@ -1,6 +1,7 @@
 'use server'
 import { getIconPosition, getIconDimensions } from '@/utils/format-icon'
 import { Canvas, loadImage, Image } from '@napi-rs/canvas'
+const base = process.cwd()
 
 type Theme = 'dark' | 'light'
 
@@ -66,7 +67,6 @@ async function createFolderArt(
 export async function generatePreview(formData: FormData) {
    const file = formData.get('file') as File
    const theme = formData.get('theme') as Theme
-   console.log(theme)
    
    const data = await file.arrayBuffer()
    const iconImage = await loadImage(data)
@@ -75,7 +75,7 @@ export async function generatePreview(formData: FormData) {
 
    const iconData = await createIcon(iconImage, width, height, theme)
 
-   const folder = await loadImage(`./resources/folders/${theme}/icon_512x512@2x.png`)
+   const folder = await loadImage(`${base}/resources/folders/${theme}/icon_512x512@2x.png`)
    const icon = await loadImage(iconData)
 
    const result = await createFolderArt(folder, icon, x, y, width, height)
