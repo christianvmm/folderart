@@ -1,13 +1,9 @@
-import { Folder } from '@/components/Folder'
+import { FolderEditor } from '@/components/FolderEditor'
 
 export default function Home() {
    return (
-      <main className='flex min-h-screen flex-col items-center justify-between gap-24 p-24'>
-         <div />
-
-         <Folder />
-
-         <p className='font-medium'>Soon!</p>
+      <main className='p-1 md:p-5'>
+         <FolderEditor />
       </main>
    )
 }

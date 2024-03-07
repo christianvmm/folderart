@@ -1,14 +1,22 @@
-'use client'
-import Image from 'next/image'
-import folderImage from '../resources/folders/dark/icon_256x256@2x.png'
+import Image, { ImageProps } from 'next/image'
 
-export function Folder() {
+export type FolderProps = {
+   loading: boolean
+   src: ImageProps['src']
+}
+
+export function Folder({ loading, src }: FolderProps) {
    return (
-      <Image
-         width={256}
-         height={256}
-         src={folderImage}
-         alt='macOS folder icon'
-      />
+      <div className=' flex justify-center items-center relative md:flex-1 md:h-[calc(100vh_-_40px)]'>
+         <Image
+            width={512}
+            height={512}
+            src={src}
+            alt='macOS folder icon'
+            priority
+         />
+
+         {loading && <div className='loader bg-[#339ee0] absolute mt-10' />}
+      </div>
    )
 }
