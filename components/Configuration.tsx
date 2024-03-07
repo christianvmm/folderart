@@ -1,16 +1,21 @@
 import { Button } from '@/components/Button'
-import { Configuration, OnChangeConfig } from '@/components/FolderEditor'
+import { OnChangeConfig } from '@/components/FolderEditor'
 import { DownloadIcon, FolderIcon, ReloadIcon } from '@/icons'
+import { Config } from '@/utils/icons'
 import { useRef } from 'react'
 
 export function Configuration({
    loadingPreview,
    configuration,
    onChangeConfig,
+   downloadFile,
+   downloading,
 }: {
    loadingPreview: boolean
-   configuration: Configuration
+   configuration: Config
    onChangeConfig: OnChangeConfig
+   downloading: boolean
+   downloadFile: () => void
 }) {
    const inputRef = useRef<HTMLInputElement>(null)
 
@@ -46,6 +51,17 @@ export function Configuration({
             }}
          />
 
+         <select
+            className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none cursor-pointer'
+            value={configuration.theme}
+            onChange={(e) => {
+               onChangeConfig('theme', e.target.value as Config['theme'])
+            }}
+         >
+            <option value='dark'>Dark Mode</option>
+            <option value='light'>Light Mode</option>
+         </select>
+
          <Button
             variant='outlined'
             className='w-full'
@@ -53,23 +69,16 @@ export function Configuration({
             disabled={loadingPreview}
          >
             <FolderIcon className='h-5 w-5 stroke-2' />
-            <span>Replace Icon</span>
+            <span>Custom Icon</span>
          </Button>
 
-         <select
-            className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none'
-            value={configuration.theme}
-            onChange={(e) => {
-               onChangeConfig('theme', e.target.value as Configuration['theme'])
-            }}
+         <Button
+            className='w-full mt-auto'
+            disabled={downloading}
+            onClick={() => downloadFile()}
          >
-            <option value='dark'>Dark Mode</option>
-            <option value='light'>Light Mode</option>
-         </select>
-
-         <Button className='w-full mt-auto' disabled>
-            {false ? (
-               <ReloadIcon className='h-4 w-4 text-[10px] animate-spin' />
+            {downloading ? (
+               <ReloadIcon className='h-5 w-5 text-[10px] animate-spin' />
             ) : (
                <DownloadIcon className='h-5 w-5 stroke-2' />
             )}
