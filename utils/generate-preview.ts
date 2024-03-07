@@ -75,7 +75,7 @@ export async function generatePreview(formData: FormData) {
 
    const iconData = await createIcon(iconImage, width, height, theme)
 
-   const folder = await loadImage(`${base}/resources/folders/${theme}/icon_512x512@2x.png`)
+   const folder = await loadImage(`${base}/resources/folders/${theme}/icon_512x512.png`)
    const icon = await loadImage(iconData)
 
    const result = await createFolderArt(folder, icon, x, y, width, height)
