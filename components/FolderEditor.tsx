@@ -16,40 +16,50 @@ export type OnChangeConfig = <T extends keyof Config>(
 export function FolderEditor() {
    const [loadingPreview, setLoadingPreview] = useState(false)
    const [downloading, setDownloading] = useState(false)
+
    const [preview, setPreview] = useState<ImageProps['src']>()
+
    const [configuration, setConfiguration] = useState<Config>({
       theme: 'dark',
+      adjustColor: 1,
+      icon: 'github',
    })
+
    const defaultPreview =
       configuration.theme === 'dark' ? githubFolderDark : githubFolderLight
 
-   async function loadPreview(config: Config) {
-      if (config.image) {
+   const onChangeConfig: OnChangeConfig = async (key, value) => {
+      const currentConfig = configuration
+      const config = { ...configuration, [key]: value }
+      setConfiguration(config)
+
+      if (config.icon) {
          setLoadingPreview(true)
 
          const form = new FormData()
-         form.append('file', config.image)
+         form.append('icon', config.icon)
          form.append('theme', config.theme)
+         form.append('adjustColor', config.adjustColor.toString())
 
          try {
             const data = await generatePreview(form)
-            setPreview(`data:image/png;base64,${data}`)
+
+            if (data) {
+               setPreview(`data:image/png;base64,${data}`)
+            } else {
+               throw new Error("Couldn't create preview")
+            }
          } catch (err) {
             if (err instanceof Error) {
                alert(err.message)
             }
+            setConfiguration(currentConfig)
          } finally {
             setLoadingPreview(false)
          }
       } else {
          console.log('Default preview')
       }
-   }
-
-   const onChangeConfig: OnChangeConfig = (key, value) => {
-      const config = { ...configuration, [key]: value }
-      setConfiguration(config)
-      loadPreview(config)
    }
 
    async function downloadFile() {

@@ -10,5 +10,6 @@ export type IconConstraints = {
 
 export type Config = {
    theme: Theme
-   image?: File
+   adjustColor: number
+   icon?: File | string
 }
