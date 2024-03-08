@@ -1,9 +1,8 @@
-import { base } from '@/consts'
 import type { IconConstraints, Theme } from './types'
 import { BaseConfig, FolderImage, Resolution, Size } from './consts'
 
 export function getFolder(resolution: Resolution, theme: Theme) {
-   return `${base}/resources/folders/${theme}/${FolderImage[resolution]}.png`
+   return `/resources/folders/${theme}/${FolderImage[resolution]}.png`
 }
 
 export function createConfig(resolution: Resolution): IconConstraints {

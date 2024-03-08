@@ -1,22 +1,20 @@
-import { Canvas, Image } from '@napi-rs/canvas'
+import { loadImage } from '@/utils/load-image'
 import { Config } from './types'
 import { IconColor } from '@/utils/icons/consts'
 
 export async function createIcon(
-   iconImage: Image,
+   canvas: HTMLCanvasElement,
+   ctx: CanvasRenderingContext2D,
+   icon: HTMLImageElement,
    width: number,
    height: number,
-   config: {
-      theme: Config['theme']
-      adjustColor: Config['adjustColor']
-   }
+   config: Config
 ) {
-   const canvas = new Canvas(width, height)
-   const ctx = canvas.getContext('2d')
-   ctx.drawImage(iconImage, 0, 0, width, height)
-
-   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
-   const data = imageData.data
+   canvas.width = width
+   canvas.height = height
+   ctx.drawImage(icon, 0, 0, width, height)
+   const iconImgData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+   const data = iconImgData.data
 
    if (config.adjustColor) {
       for (var i = 0; i < data.length; i += 4) {
@@ -24,13 +22,13 @@ export async function createIcon(
          data[i + 1] = IconColor[config.theme].green
          data[i + 2] = IconColor[config.theme].blue
 
-         // avoid transparency
          if (data[i + 3] > 100) {
             data[i + 3] = 255
          }
       }
    }
 
-   ctx.putImageData(imageData, 0, 0)
-   return canvas.toBuffer('image/png')
+   ctx.putImageData(iconImgData, 0, 0)
+
+   return loadImage(canvas.toDataURL('image/png'))
 }

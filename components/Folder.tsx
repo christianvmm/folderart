@@ -1,22 +1,19 @@
-import Image, { ImageProps } from 'next/image'
+'use client'
+import { Config, generatePreview } from '@/utils/icons'
+import { useEffect, useRef } from 'react'
 
-export type FolderProps = {
-   loading: boolean
-   src: ImageProps['src']
-}
+export function Folder({ config }: { config: Config }) {
+   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-export function Folder({ loading, src }: FolderProps) {
-   return (
-      <>
-         <Image
-            width={512}
-            height={512}
-            src={src}
-            alt='macOS folder icon'
-            priority
-         />
+   useEffect(() => {
+      const canvas = canvasRef.current
+      if (!canvas) return
 
-         {loading && <div className='loader bg-[#339ee0] absolute mt-10' />}
-      </>
-   )
+      const ctx = canvas.getContext('2d', { willReadFrequently: true })
+      if (!ctx) return
+
+      generatePreview(canvas, ctx, config)
+   }, [config])
+
+   return <canvas className='w-[512px] h-[512px]' ref={canvasRef}></canvas>
 }

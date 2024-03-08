@@ -1,19 +1,15 @@
-import { Folder } from '@/components/Folder'
 import githubFolderDark from '../public/github-folder-dark.png'
+import Image from 'next/image'
 
 export function MobileUnderConstruction() {
    return (
       <div className='flex flex-col h-full md:hidden text-center'>
-         <Folder loading={false} src={githubFolderDark}/>
+         <Image src={githubFolderDark} alt='macOS folder icon' width={512} height={512} priority />
 
          <div>
-            <h1 className='text-xl font-medium'>
-               FolderArt mobile coming soon
-            </h1>
+            <h1 className='text-xl font-medium'>FolderArt mobile coming soon</h1>
 
-            <p className='mt-3'>
-               In the meantime, please use a Desktop Browser.
-            </p>
+            <p className='mt-3'>In the meantime, please use a Desktop Browser.</p>
 
             <p>
                Stay tuned for updates at the{' '}
