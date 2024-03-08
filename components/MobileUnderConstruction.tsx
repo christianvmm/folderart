@@ -1,10 +1,10 @@
-import githubFolderDark from '../public/github-folder-dark.png'
 import Image from 'next/image'
+import fallbackFolder from '../public/fallback-folder.png'
 
 export function MobileUnderConstruction() {
    return (
       <div className='flex flex-col h-full md:hidden text-center'>
-         <Image src={githubFolderDark} alt='macOS folder icon' width={512} height={512} priority />
+         <Image src={fallbackFolder} alt='macOS folder icon' width={512} height={512} priority />
 
          <div>
             <h1 className='text-xl font-medium'>FolderArt mobile coming soon</h1>
