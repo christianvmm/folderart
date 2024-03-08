@@ -1,18 +1,15 @@
-import { Folder, type FolderProps } from '@/components/Folder'
+import Image from 'next/image'
+import fallbackFolder from '../public/fallback-folder.png'
 
-export function MobileUnderConstruction(props: FolderProps) {
+export function MobileUnderConstruction() {
    return (
       <div className='flex flex-col h-full md:hidden text-center'>
-         <Folder {...props} />
+         <Image src={fallbackFolder} alt='macOS folder icon' width={512} height={512} priority />
 
          <div>
-            <h1 className='text-xl font-medium'>
-               FolderArt mobile coming soon
-            </h1>
+            <h1 className='text-xl font-medium'>FolderArt mobile coming soon</h1>
 
-            <p className='mt-3'>
-               In the meantime, please use a Desktop Browser.
-            </p>
+            <p className='mt-3'>In the meantime, please use a Desktop Browser.</p>
 
             <p>
                Stay tuned for updates at the{' '}

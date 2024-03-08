@@ -1,76 +1,36 @@
 'use client'
-import { Configuration } from '@/components/Configuration'
 import { Folder } from '@/components/Folder'
-import { generatePreview } from '@/utils/generate-preview'
+import { type Config } from '@/utils/icons'
 import { useState } from 'react'
-import { ImageProps } from 'next/image'
-import { MobileUnderConstruction } from '@/components/MobileUnderConstruction'
-import githubFolderImage from '../public/github-folder.png'
+import { Configuration } from '@/components/Configuration'
 
-export type Configuration = {
-   theme: 'dark' | 'light'
-   image: File | null
-}
-
-export type OnChangeConfig = <T extends keyof Configuration>(
-   key: T,
-   value: Configuration[T]
-) => void
+export type OnChangeConfig = <T extends keyof Config>(key: T, value: Config[T]) => void
 
 export function FolderEditor() {
-   const [loadingPreview, setLoadingPreview] = useState(false)
-   const [preview, setPreview] = useState<ImageProps['src']>()
-   const [configuration, setConfiguration] = useState<Configuration>({
+   const [configuration, setConfiguration] = useState<Config>({
       theme: 'dark',
-      image: null,
+      adjustColor: 1,
+      icon: 'github',
    })
 
-   async function loadPreview(config: Configuration) {
-      if (!config.image) return
-
-      setLoadingPreview(true)
-
-      const form = new FormData()
-      form.append('file', config.image)
-      form.append('theme', config.theme)
-
-      try {
-         const data = await generatePreview(form)
-         setPreview(`data:image/png;base64,${data}`)
-      } catch (err) {
-         if (err instanceof Error) {
-            alert(err.message)
-         }
-      } finally {
-         setLoadingPreview(false)
-      }
-   }
-
-   const onChangeConfig: OnChangeConfig = (key, value) => {
+   const onChangeConfig: OnChangeConfig = async (key, value) => {
       const config = { ...configuration, [key]: value }
       setConfiguration(config)
-      loadPreview(config)
    }
 
    return (
-      <>
-         <div className='hidden md:flex items-center'>
-            <Configuration
-               loadingPreview={loadingPreview}
-               configuration={configuration}
-               onChangeConfig={onChangeConfig}
-            />
-
-            <Folder
-               loading={loadingPreview}
-               src={preview ?? githubFolderImage}
-            />
-         </div>
-
-         <MobileUnderConstruction
-            loading={loadingPreview}
-            src={preview ?? githubFolderImage}
+      <div className='hidden md:flex items-center'>
+         <Configuration
+            loadingPreview={false}
+            configuration={configuration}
+            onChangeConfig={onChangeConfig}
+            downloadFile={() => {}}
+            downloading={false}
          />
-      </>
+
+         <div className=' flex justify-center items-center relative md:flex-1 md:h-[calc(100vh_-_40px)]'>
+            <Folder config={configuration} />
+         </div>
+      </div>
    )
 }

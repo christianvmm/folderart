@@ -1,22 +1,37 @@
-import Image, { ImageProps } from 'next/image'
+'use client'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
+import { Config, generatePreview } from '@/utils/icons'
+import fallbackFolder from '../public/fallback-folder.png'
 
-export type FolderProps = {
-   loading: boolean
-   src: ImageProps['src']
-}
+export function Folder({ config }: { config: Config }) {
+   const canvasRef = useRef<HTMLCanvasElement>(null)
+   const [loading, setLoading] = useState(true)
 
-export function Folder({ loading, src }: FolderProps) {
+   useEffect(() => {
+      const canvas = canvasRef.current
+      if (!canvas) return
+
+      const ctx = canvas.getContext('2d', { willReadFrequently: true })
+      if (!ctx) return
+
+      generatePreview(canvas, ctx, config).then(() => setLoading(false))
+   }, [config])
+
    return (
-      <div className=' flex justify-center items-center relative md:flex-1 md:h-[calc(100vh_-_40px)]'>
-         <Image
-            width={512}
-            height={512}
-            src={src}
-            alt='macOS folder icon'
-            priority
-         />
+      <>
+         <canvas className='w-[512px] h-[512px]' ref={canvasRef}></canvas>
 
-         {loading && <div className='loader bg-[#339ee0] absolute mt-10' />}
-      </div>
+         {loading && (
+            <Image
+               src={fallbackFolder}
+               alt='macOS folder icon '
+               className='absolute'
+               width={512}
+               height={512}
+               priority
+            />
+         )}
+      </>
    )
 }
