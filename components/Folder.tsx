@@ -7,7 +7,7 @@ export type FolderProps = {
 
 export function Folder({ loading, src }: FolderProps) {
    return (
-      <div className=' flex justify-center items-center relative md:flex-1 md:h-[calc(100vh_-_40px)]'>
+      <>
          <Image
             width={512}
             height={512}
@@ -17,6 +17,6 @@ export function Folder({ loading, src }: FolderProps) {
          />
 
          {loading && <div className='loader bg-[#339ee0] absolute mt-10' />}
-      </div>
+      </>
    )
 }

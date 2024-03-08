@@ -1,9 +1,10 @@
-import { Folder, type FolderProps } from '@/components/Folder'
+import { Folder } from '@/components/Folder'
+import githubFolderDark from '../public/github-folder-dark.png'
 
-export function MobileUnderConstruction(props: FolderProps) {
+export function MobileUnderConstruction() {
    return (
       <div className='flex flex-col h-full md:hidden text-center'>
-         <Folder {...props} />
+         <Folder loading={false} src={githubFolderDark}/>
 
          <div>
             <h1 className='text-xl font-medium'>

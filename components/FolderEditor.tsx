@@ -3,7 +3,6 @@ import { Folder } from '@/components/Folder'
 import { type Config, generatePreview } from '@/utils/icons'
 import { useState } from 'react'
 import { ImageProps } from 'next/image'
-import { MobileUnderConstruction } from '@/components/MobileUnderConstruction'
 import { Configuration } from '@/components/Configuration'
 import githubFolderLight from '../public/github-folder-light.png'
 import githubFolderDark from '../public/github-folder-dark.png'
@@ -67,23 +66,18 @@ export function FolderEditor() {
    }
 
    return (
-      <>
-         <div className='hidden md:flex items-center'>
-            <Configuration
-               loadingPreview={loadingPreview}
-               configuration={configuration}
-               onChangeConfig={onChangeConfig}
-               downloadFile={downloadFile}
-               downloading={downloading}
-            />
+      <div className='hidden md:flex items-center'>
+         <Configuration
+            loadingPreview={loadingPreview}
+            configuration={configuration}
+            onChangeConfig={onChangeConfig}
+            downloadFile={downloadFile}
+            downloading={downloading}
+         />
 
+         <div className=' flex justify-center items-center relative md:flex-1 md:h-[calc(100vh_-_40px)]'>
             <Folder loading={loadingPreview} src={preview ?? defaultPreview} />
          </div>
-
-         <MobileUnderConstruction
-            loading={loadingPreview}
-            src={preview ?? defaultPreview}
-         />
-      </>
+      </div>
    )
 }
