@@ -3,7 +3,7 @@ import fallbackFolder from '../public/fallback-folder.png'
 
 export function MobileUnderConstruction() {
    return (
-      <div className='flex flex-col h-full md:hidden text-center'>
+      <div className='flex flex-col h-full md:hidden text-center items-center'>
          <Image src={fallbackFolder} alt='macOS folder icon' width={512} height={512} priority />
 
          <div>
