@@ -1,11 +1,7 @@
-import type { IconConstraints, Theme } from './types'
-import { BaseConfig, FolderImage, Resolution, Size } from './consts'
+import type { IconConstraints } from './types'
+import { BaseConfig, Resolution, Size } from './consts'
 
-export function getFolder(resolution: Resolution, theme: Theme) {
-   return `/resources/folders/${theme}/${FolderImage[resolution]}.png`
-}
-
-export function createConfig(resolution: Resolution): IconConstraints {
+export function createConstraints(resolution: Resolution): IconConstraints {
    if (resolution === Resolution.Retina512) {
       return BaseConfig
    }

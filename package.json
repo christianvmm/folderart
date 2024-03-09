@@ -11,6 +11,7 @@
       "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|json|ts|tsx)\""
    },
    "dependencies": {
+      "@napi-rs/canvas": "^0.1.51",
       "geist": "^1.2.2",
       "next": "14.1.0",
       "react": "^18",
