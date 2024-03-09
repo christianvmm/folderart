@@ -3,6 +3,7 @@ import { Folder } from '@/components/Folder'
 import { type Config } from '@/utils/icons'
 import { useState } from 'react'
 import { Configuration } from '@/components/Configuration'
+import { downloadFolderArt } from '@/utils/icons/download'
 
 export type OnChangeConfig = <T extends keyof Config>(key: T, value: Config[T]) => void
 
@@ -18,13 +19,21 @@ export function FolderEditor() {
       setConfiguration(config)
    }
 
+   async function onDownloadFile() {
+      if (!configuration.icon) return
+
+      const form = new FormData()
+      form.append('file', configuration.icon)
+      downloadFolderArt(form)
+   }
+
    return (
       <div className='hidden md:flex items-center'>
          <Configuration
             loadingPreview={false}
             configuration={configuration}
             onChangeConfig={onChangeConfig}
-            downloadFile={() => {}}
+            downloadFile={() => onDownloadFile()}
             downloading={false}
          />
 
