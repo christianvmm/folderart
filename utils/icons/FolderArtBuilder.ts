@@ -9,6 +9,8 @@ import {
    Resolution,
    Size,
 } from './consts'
+import { base } from '@/consts'
+import { Image as NapiImage } from '@napi-rs/canvas'
 
 type Canvas = {
    width: number
@@ -34,12 +36,28 @@ type Context = {
 
 export class FolderArtBuilder {
    constructor(
-      private canvas: Canvas,
-      private ctx: Context,
-      private config: Config
+      private canvas?: Canvas,
+      private ctx?: Context,
+      private config?: Config
    ) {}
 
-   private async loadIcon() {
+   public setCanvas(canvas: Canvas) {
+      this.canvas = canvas
+   }
+
+   public setContext(ctx: Context) {
+      this.ctx = ctx
+   }
+
+   public setConfig(config: Config) {
+      this.config = config
+   }
+
+   public async loadIcon() {
+      if (!this.config) {
+         throw new Error()
+      }
+
       const icon = this.config.icon
 
       if (typeof icon === 'string') {
@@ -51,21 +69,42 @@ export class FolderArtBuilder {
       }
    }
 
-   private async createIcon(icon: HTMLImageElement, width: number, height: number) {
+   public async createIcon(icon: HTMLImageElement, width: number, height: number) {
+      if (!this.config) {
+         throw new Error()
+      }
+
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')
-
       canvas.width = width
       canvas.height = height
+
+      if (!ctx) {
+         throw new Error()
+      }
+
+      FolderArtBuilder.drawIcon(canvas, ctx, icon, width, height, this.config)
+
+      return loadImage(canvas.toDataURL('image/png'))
+   }
+
+   public static drawIcon(
+      canvas: Canvas,
+      ctx: Context,
+      icon: any,
+      width: number,
+      height: number,
+      config: Config
+   ) {
       ctx!.drawImage(icon, 0, 0, width, height)
       const iconImgData = ctx!.getImageData(0, 0, canvas.width, canvas.height)
       const data = iconImgData.data
 
-      if (this.config.adjustColor) {
+      if (config.adjustColor) {
          for (var i = 0; i < data.length; i += 4) {
-            data[i] = IconColor[this.config.theme].red
-            data[i + 1] = IconColor[this.config.theme].green
-            data[i + 2] = IconColor[this.config.theme].blue
+            data[i] = IconColor[config.theme].red
+            data[i + 1] = IconColor[config.theme].green
+            data[i + 2] = IconColor[config.theme].blue
 
             if (data[i + 3] > 100) {
                data[i + 3] = 255
@@ -73,15 +112,58 @@ export class FolderArtBuilder {
          }
       }
 
-      ctx!.putImageData(iconImgData, 0, 0)
-      return loadImage(canvas.toDataURL('image/png'))
+      ctx.putImageData(iconImgData, 0, 0)
    }
 
-   private getFolder(resolution: Resolution, theme: Theme) {
-      return `/resources/folders/${theme}/${FolderImage[resolution]}.png`
+   public static getIconPath(icon: string) {
+      const publicPath = `/icons/${icon}.svg`
+      const serverSide = typeof window === 'undefined'
+
+      if (serverSide) {
+         return `${base}/public/${publicPath}`
+      } else {
+         return publicPath
+      }
+   }
+
+   public static getFolderPath(resolution: Resolution, theme: Theme) {
+      const publicPath = `resources/folders/${theme}/${FolderImage[resolution]}.png`
+      const serverSide = typeof window === 'undefined'
+
+      if (serverSide) {
+         return `${base}/public/${publicPath}`
+      } else {
+         return publicPath
+      }
+   }
+
+   public static drawFolderArt(
+      ctx: Context,
+      folder: any,
+      icon: any,
+      x: number,
+      y: number,
+      width: number,
+      height: number,
+      resolution: Resolution
+   ) {
+      // Draw folder
+      const size = Size[resolution]
+      ctx.drawImage(folder, 0, 0, size, size)
+
+      // Draw icon
+      ctx.shadowColor = ICON_SHADOW_COLOR
+      ctx.shadowOffsetY = ICON_SHADOW_SIZE
+      ctx.shadowBlur = ICON_SHADOW_SIZE
+      ctx.globalCompositeOperation = 'source-over'
+      ctx.drawImage(icon, x, y, width, height)
    }
 
    public async generatePreview() {
+      if (!this.config || !this.canvas || !this.ctx) {
+         throw new Error()
+      }
+
       const resolution = Resolution.Retina512
       const iconImg: HTMLImageElement | null = await this.loadIcon()
       if (!iconImg) return
@@ -89,7 +171,7 @@ export class FolderArtBuilder {
       const { width, height } = getIconDimensions(iconImg.width, iconImg.height, resolution)
       const { x, y } = getIconPosition(width, height, resolution)
       const icon = await this.createIcon(iconImg, width, height)
-      const folder = await loadImage(this.getFolder(resolution, this.config.theme))
+      const folder = await loadImage(FolderArtBuilder.getFolderPath(resolution, this.config.theme))
 
       // Draw folder
       const size = Size[resolution]

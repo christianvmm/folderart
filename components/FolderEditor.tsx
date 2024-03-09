@@ -22,9 +22,10 @@ export function FolderEditor() {
    async function onDownloadFile() {
       if (!configuration.icon) return
 
+      const { icon, ...config } = configuration
       const form = new FormData()
-      form.append('file', configuration.icon)
-      downloadFolderArt(form)
+      form.append('file', icon)
+      downloadFolderArt(form, config)
    }
 
    return (
