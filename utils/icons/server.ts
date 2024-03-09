@@ -4,23 +4,18 @@ import { Canvas as NapiCanvas, Image, loadImage } from '@napi-rs/canvas'
 import { base } from '@/consts'
 import { Config } from './types'
 import { getIconDimensions, getIconPosition } from './format-icon'
-import { BaseConfig, FolderImage, Resolution, Size, resolutions } from './consts'
+import { FolderImage, Resolution, Size, resolutions } from './consts'
 import { drawFolderArt, drawIcon, getFolderPath, getIconPath } from './common'
 
 async function loadIconImg(icon: string | File): Promise<Image> {
    const isDefaultIcon = typeof icon === 'string'
-   let iconImg: Image
 
    if (isDefaultIcon) {
-      iconImg = await loadImage(getIconPath(icon))
-      iconImg.width = BaseConfig.preferredSize
-      iconImg.height = BaseConfig.preferredSize
+      return await loadImage(getIconPath(icon))
    } else {
       const data = await icon.arrayBuffer()
-      iconImg = await loadImage(data)
+      return await loadImage(data)
    }
-
-   return iconImg
 }
 
 async function createIcon(
@@ -56,10 +51,13 @@ export async function downloadFolderArt(formData: FormData, config: Omit<Config,
    const file = formData.get('file')
 
    if (!file) {
-      throw new Error()
+      throw new Error("Couldn't get file")
    }
 
    const iconImg = await loadIconImg(file)
+   const id = (Math.random() + 1).toString(36).substring(7)
+   const dir = `${base}/results/${id}`
+   await fs.mkdir(dir, { recursive: true })
 
    for (const resolution of resolutions) {
       const { width, height } = getIconDimensions(iconImg.width, iconImg.height, resolution)
@@ -68,6 +66,8 @@ export async function downloadFolderArt(formData: FormData, config: Omit<Config,
       const folder = await loadImage(getFolderPath(resolution, config.theme))
 
       const result = await createPreview(folder, icon, x, y, width, height, resolution)
-      await fs.writeFile(`${base}/previews/preview-${FolderImage[resolution]}.png`, result)
+      await fs.writeFile(`${dir}/${FolderImage[resolution]}.png`, result)
    }
+
+   await fs.rename(dir, `${dir}.iconset`)
 }

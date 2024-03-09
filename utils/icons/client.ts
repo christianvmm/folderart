@@ -17,7 +17,7 @@ async function loadIconImg(icon: Config['icon']): Promise<HTMLImageElement | nul
 }
 
 async function createIcon(
-   icon: HTMLImageElement,
+   iconImg: HTMLImageElement,
    width: number,
    height: number,
    config: Config
@@ -31,7 +31,7 @@ async function createIcon(
       throw new Error()
    }
 
-   drawIcon(canvas, ctx, icon, width, height, config)
+   drawIcon(canvas, ctx, iconImg, width, height, config)
    return loadImage(canvas.toDataURL('image/png'))
 }
 
