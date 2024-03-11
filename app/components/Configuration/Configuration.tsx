@@ -4,7 +4,7 @@ import { OnChangeConfig } from '@/app/components/FolderEditor'
 import { DownloadIcon, FolderIcon } from '@/icons'
 import { Config } from '@/utils/icons'
 import { useRef } from 'react'
-import { defaultIcons } from './defaultIcons'
+import { devIcons } from './defaultIcons'
 
 export function Configuration({
    configuration,
@@ -72,7 +72,7 @@ export function Configuration({
          </select>
 
          <ul className='grid md:grid-cols-6 lg:grid-cols-7 gap-3'>
-            {defaultIcons.map((icon, i) => {
+            {devIcons.map((icon, i) => {
                const selected = configuration.icon === icon.name
 
                return (
