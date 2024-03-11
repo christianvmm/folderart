@@ -1,4 +1,3 @@
-import { Image as NapiImage } from '@napi-rs/canvas'
 import { base } from '@/consts'
 import { Canvas, Config, Context, Theme } from './types'
 import {
@@ -32,7 +31,7 @@ export function getFolderPath(resolution: Resolution, theme: Theme) {
    }
 }
 
-export function drawIcon<Image extends HTMLImageElement | NapiImage>(
+export function drawIcon<Image extends HTMLImageElement>(
    canvas: Canvas,
    ctx: Context,
    icon: Image,
@@ -59,7 +58,7 @@ export function drawIcon<Image extends HTMLImageElement | NapiImage>(
    ctx.putImageData(iconImgData, 0, 0)
 }
 
-export function drawFolderArt<Image extends HTMLImageElement | NapiImage>(
+export function drawFolderArt<Image extends HTMLImageElement>(
    ctx: Context,
    folder: Image,
    icon: Image,

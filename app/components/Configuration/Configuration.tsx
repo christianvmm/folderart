@@ -1,22 +1,18 @@
 import Image from 'next/image'
 import { Button } from '@/components/Button'
-import { OnChangeConfig } from '@/components/FolderEditor'
-import { DownloadIcon, FolderIcon, ReloadIcon } from '@/icons'
+import { OnChangeConfig } from '@/app/components/FolderEditor'
+import { DownloadIcon, FolderIcon } from '@/icons'
 import { Config } from '@/utils/icons'
 import { useRef } from 'react'
 import { defaultIcons } from './defaultIcons'
 
 export function Configuration({
-   loadingPreview,
    configuration,
    onChangeConfig,
    downloadFile,
-   downloading,
 }: {
-   loadingPreview: boolean
    configuration: Config
    onChangeConfig: OnChangeConfig
-   downloading: boolean
    downloadFile: () => void
 }) {
    const inputRef = useRef<HTMLInputElement>(null)
@@ -29,7 +25,7 @@ export function Configuration({
 
    return (
       <aside
-         className='relative h-full w-96 rounded-xl border border-zinc-200 p-5 flex flex-col gap-5 shadow-sm'
+         className='relative h-full md:w-80 lg:w-96 rounded-xl border border-zinc-200 p-5 flex flex-col gap-5 shadow-sm'
          style={{
             height: 'calc(100vh - 40px)',
          }}
@@ -75,7 +71,7 @@ export function Configuration({
             <option value={0}>Preserve icon color</option>
          </select>
 
-         <ul className='grid grid-cols-7 gap-3'>
+         <ul className='grid md:grid-cols-6 lg:grid-cols-7 gap-3'>
             {defaultIcons.map((icon, i) => {
                const selected = configuration.icon === icon.name
 
@@ -99,26 +95,13 @@ export function Configuration({
             })}
          </ul>
 
-         <Button
-            variant='outlined'
-            className='w-full mt-auto'
-            onClick={() => openFileExporer()}
-            disabled={loadingPreview}
-         >
+         <Button variant='outlined' className='w-full mt-auto' onClick={() => openFileExporer()}>
             <FolderIcon className='h-5 w-5 stroke-2' />
             <span>Custom Icon</span>
          </Button>
 
-         <Button
-            className='w-full'
-            disabled={downloading}
-            onClick={() => downloadFile()}
-         >
-            {downloading ? (
-               <ReloadIcon className='h-5 w-5 text-[10px] animate-spin' />
-            ) : (
-               <DownloadIcon className='h-5 w-5 stroke-2' />
-            )}
+         <Button className='w-full' onClick={() => downloadFile()}>
+            <DownloadIcon className='h-5 w-5 stroke-2' />
 
             <span>Download</span>
          </Button>

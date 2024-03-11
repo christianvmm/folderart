@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import fallbackFolder from '../public/fallback-folder.png'
+import fallbackFolder from '../../public/fallback-folder.png'
 
 export function MobileUnderConstruction() {
    return (
