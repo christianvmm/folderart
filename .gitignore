@@ -35,8 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# previews
+# previews and results
 /previews
-
-# todo
-TODO.md
+/results

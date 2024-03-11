@@ -1,4 +1,4 @@
-import { createConfig } from './config'
+import { createConstraints } from './create-constraints'
 import { Resolution, Size } from './consts'
 
 export function getIconPosition(
@@ -6,7 +6,7 @@ export function getIconPosition(
    height: number,
    resolution: Resolution
 ) {
-   const config = createConfig(resolution)
+   const config = createConstraints(resolution)
    return {
       x: Size[resolution] / 2 - width / 2,
       y: config.startY + config.folderAreaHeight / 2 - height / 2,
@@ -18,7 +18,7 @@ export function getIconDimensions(
    originalHeight: number,
    resolution: Resolution
 ) {
-   const config = createConfig(resolution)
+   const config = createConstraints(resolution)
    const aspectRatio = originalWidth / originalHeight
    let iconWidth: number
    let iconHeight: number

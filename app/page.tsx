@@ -1,5 +1,5 @@
-import { FolderEditor } from '@/components/FolderEditor'
-import { MobileUnderConstruction } from '@/components/MobileUnderConstruction'
+import { FolderEditor } from '@/app/components/FolderEditor'
+import { MobileUnderConstruction } from '@/app/components/MobileUnderConstruction'
 
 export default function Home() {
    return (
