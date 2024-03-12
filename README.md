@@ -4,10 +4,22 @@
 
 <div align="center">
 
+<p align="center">
+    Create custom folder icons for macOS.
+    <br />
+    <a href="https://folderart.christianvm.dev"><strong>Live Demo »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/christianvmm/folderart/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/christianvmm/folderart/issues">Request Feature</a>
+</p>
+
 ![Next.js Badge](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=fff&style=flat)
 ![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=fff&style=flat)
-
 </div>
+
+<br />
 
 ### Installation
 
