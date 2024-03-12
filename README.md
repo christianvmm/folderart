@@ -10,9 +10,6 @@
     <a href="https://folderart.christianvm.dev"><strong>Live Demo »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/christianvmm/folderart/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/christianvmm/folderart/issues">Request Feature</a>
 </p>
 
 ![Next.js Badge](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=fff&style=flat)
