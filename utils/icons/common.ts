@@ -1,34 +1,12 @@
-import { base } from '@/consts'
-import { Canvas, Config, Context, Theme } from './types'
-import {
-   ICON_SHADOW_COLOR,
-   ICON_SHADOW_SIZE,
-   FolderImage,
-   IconColor,
-   Resolution,
-   Size,
-} from './consts'
+import { Canvas, Color, Config, Context } from './types'
+import { ShadowColor, ICON_SHADOW_SIZE, Resolution, Size, IconColor } from './consts'
 
 export function getIconPath(icon: string) {
-   const publicPath = `/icons/${icon}.svg`
-   const serverSide = typeof window === 'undefined'
-
-   if (serverSide) {
-      return `${base}/public/${publicPath}`
-   } else {
-      return publicPath
-   }
+   return `/icons/${icon}.svg`
 }
 
-export function getFolderPath(resolution: Resolution, theme: Theme) {
-   const publicPath = `resources/folders/${theme}/${FolderImage[resolution]}.png`
-   const serverSide = typeof window === 'undefined'
-
-   if (serverSide) {
-      return `${base}/public/${publicPath}`
-   } else {
-      return publicPath
-   }
+export function getFolderPath(color: Color) {
+   return `folders/${color}.png`
 }
 
 export function drawIcon<Image extends HTMLImageElement>(
@@ -44,10 +22,12 @@ export function drawIcon<Image extends HTMLImageElement>(
    const data = iconImgData.data
 
    if (config.adjustColor) {
-      for (var i = 0; i < data.length; i += 4) {
-         data[i] = IconColor[config.theme].red
-         data[i + 1] = IconColor[config.theme].green
-         data[i + 2] = IconColor[config.theme].blue
+      const COLOR = IconColor[config.color]
+
+      for (let i = 0; i < data.length; i += 4) {
+         data[i] = COLOR.red
+         data[i + 1] = COLOR.green
+         data[i + 2] = COLOR.blue
 
          if (data[i + 3] > 100) {
             data[i + 3] = 255
@@ -66,12 +46,13 @@ export function drawFolderArt<Image extends HTMLImageElement>(
    y: number,
    width: number,
    height: number,
-   resolution: Resolution
+   resolution: Resolution,
+   color: Color
 ) {
    const size = Size[resolution]
    ctx.drawImage(folder, 0, 0, size, size)
 
-   ctx.shadowColor = ICON_SHADOW_COLOR
+   ctx.shadowColor = ShadowColor[color]
    ctx.shadowOffsetY = ICON_SHADOW_SIZE
    ctx.shadowBlur = ICON_SHADOW_SIZE
    ctx.globalCompositeOperation = 'source-over'

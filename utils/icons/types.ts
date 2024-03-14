@@ -1,4 +1,14 @@
-export type Theme = 'dark' | 'light'
+export type Color =
+   | 'default-dark'
+   | 'default-light'
+   | 'green'
+   | 'lime'
+   | 'yellow'
+   | 'orange'
+   | 'red'
+   | 'purple'
+   | 'gray'
+   | 'black'
 
 export type IconConstraints = {
    maxWidth: number
@@ -9,9 +19,9 @@ export type IconConstraints = {
 }
 
 export type Config = {
-   theme: Theme
    adjustColor: number
    icon?: File | string
+   color: Color
 }
 
 export type Canvas = {

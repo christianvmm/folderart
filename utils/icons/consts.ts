@@ -1,4 +1,47 @@
-import { IconConstraints, Theme } from './types'
+import { IconConstraints, Color } from './types'
+
+export const COLORS: { value: Color; label: string }[] = [
+   {
+      value: 'default-dark',
+      label: 'Default Dark',
+   },
+   {
+      value: 'default-light',
+      label: 'Default Light',
+   },
+   {
+      value: 'green',
+      label: 'Green',
+   },
+   {
+      value: 'lime',
+      label: 'Lime',
+   },
+   {
+      value: 'yellow',
+      label: 'Yellow',
+   },
+   {
+      value: 'orange',
+      label: 'Orange',
+   },
+   {
+      value: 'red',
+      label: 'Red',
+   },
+   {
+      value: 'purple',
+      label: 'Purple',
+   },
+   {
+      value: 'gray',
+      label: 'Gray',
+   },
+   {
+      value: 'black',
+      label: 'Black',
+   },
+]
 
 export enum Resolution {
    NonRetina16 = 0,
@@ -47,34 +90,72 @@ export const BaseConfig: IconConstraints = {
    startY: 258,
 }
 
-export const FolderImage: Record<Resolution, string> = {
-   [Resolution.NonRetina16]: 'icon_16x16',
-   [Resolution.Retina16]: 'icon_16x16@2x',
-   [Resolution.NonRetina32]: 'icon_32x32',
-   [Resolution.Retina32]: 'icon_32x32@2x',
-   [Resolution.NonRetina128]: 'icon_128x128',
-   [Resolution.Retina128]: 'icon_128x128@2x',
-   [Resolution.NonRetina256]: 'icon_256x256',
-   [Resolution.Retina256]: 'icon_256x256@2x',
-   [Resolution.NonRetina512]: 'icon_512x512',
-   [Resolution.Retina512]: 'icon_512x512@2x',
-}
+type RGB = { red: number; green: number; blue: number }
 
-export const IconColor: Record<
-   Theme,
-   { red: number; green: number; blue: number }
-> = {
-   dark: {
+export const IconColor: Record<Color, RGB> = {
+   'default-dark': {
       red: 51,
       green: 157,
       blue: 224,
    },
-   light: {
+   'default-light': {
       red: 63,
       green: 170,
       blue: 230,
    },
+   green: {
+      red: 24,
+      green: 171,
+      blue: 104,
+   },
+   lime: {
+      red: 58,
+      green: 173,
+      blue: 75,
+   },
+   yellow: {
+      red: 202,
+      green: 164,
+      blue: 27,
+   },
+   orange: {
+      red: 205,
+      green: 111,
+      blue: 4,
+   },
+   red: {
+      red: 206,
+      green: 45,
+      blue: 36,
+   },
+   purple: {
+      red: 131,
+      green: 63,
+      blue: 157,
+   },
+   gray: {
+      red: 102,
+      green: 102,
+      blue: 102,
+   },
+   black: {
+      red: 17,
+      green: 17,
+      blue: 17,
+   },
+}
+
+export const ShadowColor: Record<Color, string> = {
+   'default-dark': '#97D8FC',
+   'default-light': '#97D8FC',
+   green: '#91E2BC',
+   lime: '#99EAA4',
+   yellow: '#F4DA86',
+   orange: '#F1C287',
+   red: '#F89B97',
+   purple: '#CF9BE3',
+   gray: '#C2C2C2',
+   black: '#5F5F5F',
 }
 
 export const ICON_SHADOW_SIZE = 3
-export const ICON_SHADOW_COLOR = '#97D8FC'

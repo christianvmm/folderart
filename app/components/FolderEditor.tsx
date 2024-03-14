@@ -5,13 +5,14 @@ import { Configuration } from '@/app/components/Configuration'
 import { type Config } from '@/utils/icons'
 import { useUpdatePreview } from '@/hooks'
 import { HowToUse } from '@/app/components/HowToUse'
+import { COLORS } from '@/utils/icons/consts'
 
 export type OnChangeConfig = <T extends keyof Config>(key: T, value: Config[T]) => void
 
 export function FolderEditor() {
    const [filename] = useState('icon')
    const [configuration, setConfiguration] = useState<Config>({
-      theme: 'dark',
+      color: 'default-dark',
       adjustColor: 1,
       icon: 'github',
    })
@@ -33,6 +34,12 @@ export function FolderEditor() {
       link.click()
    }
 
+   function onChangeColor() {
+      const currentIdx = COLORS.findIndex((color) => color.value === configuration.color)
+      const idx = (currentIdx + 1) % COLORS.length
+      onChangeConfig('color', COLORS[idx].value)
+   }
+
    return (
       <div className='flex flex-col-reverse md:flex-row items-center px-5 md:px-0'>
          <Configuration
@@ -46,7 +53,7 @@ export function FolderEditor() {
                <span className='text-zinc-500'> FolderArt / </span> {filename}.png
             </p>
 
-            <Folder loading={loading} canvasRef={canvasRef} />
+            <Folder loading={loading} canvasRef={canvasRef} onChangeColor={onChangeColor} />
 
             <div className='ml-auto flex items-center w-full md:w-auto justify-between md:justify-start gap-5'>
                <p className='text-sm'>
