@@ -5,7 +5,7 @@ import { GeistMono } from 'geist/font/mono'
 import './globals.css'
 
 export const metadata: Metadata = {
-   title: 'Folder Icon Maker - FolderArt by christianvm',
+   title: 'FolderArt by christianvm - Folder Icon Maker',
    description: 'Create custom icons for files or folders for macOS',
    metadataBase: new URL('https://folderart.christianvm.dev'),
 }
