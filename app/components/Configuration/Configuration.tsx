@@ -25,10 +25,8 @@ export function Configuration({
 
    return (
       <aside
-         className='relative h-full md:w-80 lg:w-96 rounded-xl border border-zinc-200 p-5 flex flex-col gap-5 shadow-sm'
-         style={{
-            height: 'calc(100vh - 40px)',
-         }}
+         className='relative lg:w-96 rounded-xl border border-zinc-200 p-5 flex flex-col gap-5 shadow-sm 
+         md:h-[calc(100vh_-_40px)] w-full md:w-80'
       >
          <h1 className='font-medium'>Configuration</h1>
 
@@ -71,7 +69,7 @@ export function Configuration({
             <option value={0}>Preserve icon color</option>
          </select>
 
-         <ul className='grid md:grid-cols-6 lg:grid-cols-7 gap-3'>
+         <ul className='hidden md:grid md:grid-cols-6 lg:grid-cols-7 gap-3'>
             {devIcons.map((icon, i) => {
                const selected = configuration.icon === icon.name
 
@@ -95,7 +93,7 @@ export function Configuration({
             })}
          </ul>
 
-         <Button variant='outlined' className='w-full mt-auto' onClick={() => openFileExporer()}>
+         <Button variant='outlined' className='w-full md:mt-auto' onClick={() => openFileExporer()}>
             <FolderIcon className='h-5 w-5 stroke-2' />
             <span>Custom Icon</span>
          </Button>

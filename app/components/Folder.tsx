@@ -12,7 +12,10 @@ export function Folder({
 }) {
    return (
       <>
-         <canvas className={loading ? 'hidden' : 'w-[512px] h-[512px]'} ref={canvasRef}></canvas>
+         <canvas
+            className={loading ? 'hidden' : 'w-[512px] h-auto max-w-[90vw]'}
+            ref={canvasRef}
+         ></canvas>
 
          {loading && (
             <Image
@@ -20,6 +23,7 @@ export function Folder({
                alt='macOS folder icon '
                width={512}
                height={512}
+               className='max-w-[90vw]'
                priority
             />
          )}

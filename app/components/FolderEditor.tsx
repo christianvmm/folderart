@@ -34,15 +34,15 @@ export function FolderEditor() {
    }
 
    return (
-      <div className='hidden md:flex items-center'>
+      <div className='flex flex-col-reverse md:flex-row items-center'>
          <Configuration
             configuration={configuration}
             onChangeConfig={onChangeConfig}
             downloadFile={onDownload}
          />
 
-         <div className='flex flex-col justify-between items-center relative md:flex-1 md:min-h-[calc(100vh_-_40px)]'>
-            <p className='text-sm'>
+         <div className='flex flex-col-reverse md:flex-col justify-between items-center relative md:flex-1 md:min-h-[calc(100vh_-_40px)] pt-5 md:pt-0'>
+            <p className='hidden md:block text-sm'>
                <span className='text-zinc-500'> FolderArt / </span> {filename}.png
             </p>
 
