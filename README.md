@@ -18,8 +18,17 @@
 
 <br />
 
-### Installation
+### Features
 
+- [x] ⚛️  Default Icons
+- [x] 📁 Custom Icons
+- [x] 🎨 Change Folder Color
+- [x] 💻 Live Preview
+- [x] 🗳️ Download File
+
+<br />
+
+### Installation
 1. Clone the repo
 
    ```sh
