@@ -34,21 +34,34 @@ export function FolderEditor() {
    }
 
    return (
-      <div className='flex flex-col-reverse md:flex-row items-center'>
+      <div className='flex flex-col-reverse md:flex-row items-center px-5 md:px-0'>
          <Configuration
             configuration={configuration}
             onChangeConfig={onChangeConfig}
             downloadFile={onDownload}
          />
 
-         <div className='flex flex-col-reverse md:flex-col justify-between items-center relative md:flex-1 md:min-h-[calc(100vh_-_40px)] pt-5 md:pt-0'>
+         <div className='flex flex-col-reverse md:flex-col justify-between items-center relative md:flex-1 md:min-h-[calc(100vh_-_40px)] pt-5 md:pt-0 w-full'>
             <p className='hidden md:block text-sm'>
                <span className='text-zinc-500'> FolderArt / </span> {filename}.png
             </p>
 
             <Folder loading={loading} canvasRef={canvasRef} />
 
-            <HowToUse />
+            <div className='ml-auto flex items-center w-full md:w-auto justify-between md:justify-start gap-5'>
+               <p className='text-sm'>
+                  <span className='text-zinc-500'>Created by</span>{' '}
+                  <a
+                     href='https://www.christianvm.dev'
+                     target='_blank'
+                     className='underline underline-offset-2'
+                  >
+                     christianvm
+                  </a>
+               </p>
+
+               <HowToUse />
+            </div>
          </div>
       </div>
    )
