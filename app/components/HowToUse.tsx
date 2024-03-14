@@ -11,7 +11,7 @@ export function HowToUse() {
    return (
       <>
          <button
-            className='bg-zinc-950 hover:bg-zinc-800 text-white p-2 rounded-full ml-auto absolute md:static top-5 right-5'
+            className='bg-zinc-950 hover:bg-zinc-800 text-white p-2 rounded-full ml-auto'
             onClick={() => setOpen(true)}
          >
             <QuestionMarkIcon className='w-5 h-5 stroke-2' />
