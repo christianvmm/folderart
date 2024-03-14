@@ -6,16 +6,23 @@ import { RefObject } from 'react'
 export function Folder({
    loading,
    canvasRef,
+   onChangeColor,
 }: {
    loading: boolean
    canvasRef: RefObject<HTMLCanvasElement>
+   onChangeColor: () => void
 }) {
    return (
       <>
-         <canvas
-            className={loading ? 'hidden' : 'w-[512px] h-auto max-w-[90vw]'}
-            ref={canvasRef}
-         ></canvas>
+         <button
+            className={loading ? 'hidden' : 'w-[512px] h-auto max-w-[90vw] cursor-pointer outline-none'}
+            onClick={() => onChangeColor()}
+         >
+            <canvas
+               className='w-[512px] max-w-[90vw] h-auto'
+               ref={canvasRef}
+            ></canvas>
+         </button>
 
          {loading && (
             <Image

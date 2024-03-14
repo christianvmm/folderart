@@ -5,6 +5,7 @@ import { DownloadIcon, FolderIcon } from '@/icons'
 import { Config } from '@/utils/icons'
 import { useRef } from 'react'
 import { devIcons } from './defaultIcons'
+import { COLORS } from '@/utils/icons/consts'
 
 export function Configuration({
    configuration,
@@ -47,16 +48,28 @@ export function Configuration({
             }}
          />
 
-         <select
-            className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none cursor-pointer'
-            value={configuration.theme}
-            onChange={(e) => {
-               onChangeConfig('theme', e.target.value as Config['theme'])
-            }}
-         >
-            <option value='dark'>Dark Mode</option>
-            <option value='light'>Light Mode</option>
-         </select>
+         <div>
+            <select
+               className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none cursor-pointer mt-2'
+               value={configuration.color}
+               onChange={(e) => {
+                  onChangeConfig('color', e.target.value as Config['color'])
+               }}
+            >
+               {COLORS.map((color) => {
+                  return (
+                     <option value={color.value} key={color.value}>
+                        {color.label}
+                     </option>
+                  )
+               })}
+            </select>
+
+            <p className='text-sm text-zinc-500 mt-1 ml-1'>
+               Select an option or{' '}
+               <span className='font-medium text-zinc-700'>click on the folder</span> to change.
+            </p>
+         </div>
 
          <select
             className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none cursor-pointer'
