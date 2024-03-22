@@ -1,9 +1,9 @@
 'use client'
 import { Folder } from '@/app/components/Folder'
-import { useState } from 'react'
+import { DragEvent, useState } from 'react'
 import { Configuration } from '@/app/components/Configuration'
 import { type Config } from '@/utils/icons'
-import { useUpdatePreview } from '@/hooks'
+import { useDragNDrop, useUpdatePreview } from '@/hooks'
 import { HowToUse } from '@/app/components/HowToUse'
 import { COLORS } from '@/utils/icons/consts'
 
@@ -40,8 +40,21 @@ export function FolderEditor() {
       onChangeConfig('color', COLORS[idx].value)
    }
 
+   function onDropHandler(e: DragEvent<HTMLElement>) {
+      const files = e.dataTransfer?.files
+      if (files) {
+         const file = files[0]
+
+         if (file && file.type.includes('image')) {
+            onChangeConfig('icon', file)
+         }
+      }
+   }
+
+   const dragNDrop = useDragNDrop(onDropHandler)
+
    return (
-      <div className='flex flex-col-reverse md:flex-row items-center px-5 md:px-0'>
+      <div className='flex flex-col-reverse md:flex-row items-center px-5 md:px-0' {...dragNDrop}>
          <Configuration
             configuration={configuration}
             onChangeConfig={onChangeConfig}
