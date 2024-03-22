@@ -1,6 +1,6 @@
 'use client'
 import { Folder } from '@/app/components/Folder'
-import { DragEvent, useState } from 'react'
+import { type DragEvent, useEffect, useState } from 'react'
 import { Configuration } from '@/app/components/Configuration'
 import { type Config } from '@/utils/icons'
 import { useDragNDrop, useUpdatePreview } from '@/hooks'
@@ -19,8 +19,29 @@ export function FolderEditor() {
    const [canvasRef, loading] = useUpdatePreview(configuration)
 
    const onChangeConfig: OnChangeConfig = async (key, value) => {
-      const config = { ...configuration, [key]: value }
-      setConfiguration(config)
+      setConfiguration((prev) => ({
+         ...prev,
+         [key]: value,
+      }))
+   }
+
+   function onChangeColor() {
+      const currentIdx = COLORS.findIndex((color) => color.value === configuration.color)
+      const idx = (currentIdx + 1) % COLORS.length
+      onChangeConfig('color', COLORS[idx].value)
+   }
+
+   function proccessImageFiles(files: FileList) {
+      const file = files[0]
+
+      if (file && file.type.includes('image')) {
+         onChangeConfig('icon', file)
+      }
+   }
+
+   function onDropHandler(e: DragEvent<HTMLElement>) {
+      const files = e.dataTransfer?.files
+      proccessImageFiles(files)
    }
 
    async function onDownload() {
@@ -34,22 +55,20 @@ export function FolderEditor() {
       link.click()
    }
 
-   function onChangeColor() {
-      const currentIdx = COLORS.findIndex((color) => color.value === configuration.color)
-      const idx = (currentIdx + 1) % COLORS.length
-      onChangeConfig('color', COLORS[idx].value)
-   }
+   useEffect(() => {
+      const onPaste = (e: ClipboardEvent) => {
+         e.preventDefault()
 
-   function onDropHandler(e: DragEvent<HTMLElement>) {
-      const files = e.dataTransfer?.files
-      if (files) {
-         const file = files[0]
-
-         if (file && file.type.includes('image')) {
-            onChangeConfig('icon', file)
+         const clipboardData = e.clipboardData
+         if (clipboardData) {
+            proccessImageFiles(clipboardData.files)
          }
       }
-   }
+
+      window.addEventListener('paste', onPaste)
+      return () => window.removeEventListener('paste', onPaste)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [])
 
    const dragNDrop = useDragNDrop(onDropHandler)
 
