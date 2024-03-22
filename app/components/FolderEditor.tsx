@@ -59,8 +59,9 @@ export function FolderEditor() {
                <p className='text-sm'>
                   <span className='text-zinc-500'>Created by</span>{' '}
                   <a
-                     href='https://www.christianvm.dev'
+                     href='https://github.com/christianvmm/folderart'
                      target='_blank'
+                     rel='noopener noreferrer'
                      className='underline underline-offset-2'
                   >
                      christianvm
