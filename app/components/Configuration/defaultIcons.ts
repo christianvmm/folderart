@@ -8,6 +8,7 @@ import JSIcon from '@/public/icons/js.svg'
 import TSIcon from '@/public/icons/ts.svg'
 import GitIcon from '@/public/icons/git.svg'
 import VsCodeIcon from '@/public/icons/vscode.svg'
+import NextIcon from '@/public/icons/next.svg'
 
 export const devIcons = [
    {
@@ -18,6 +19,10 @@ export const devIcons = [
    {
       name: 'vercel',
       src: VercelIcon,
+   },
+   {
+      name: 'next',
+      src: NextIcon,
    },
    {
       name: 'apple',
