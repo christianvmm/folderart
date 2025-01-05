@@ -34,7 +34,7 @@ export function drawText(ctx: Context, text: string, color: Color, resolution: R
    const selectedColor = IconColor[color]
    const textColor = `rgb(${selectedColor.red}, ${selectedColor.green}, ${selectedColor.blue})`
 
-   let fontSize = 280
+   let fontSize = 300
    const fontFamily = 'Arial'
    ctx.font = `${fontSize}px ${fontFamily}`
 
@@ -46,8 +46,9 @@ export function drawText(ctx: Context, text: string, color: Color, resolution: R
 
    const textWidth = ctx.measureText(text).width
    const x = Size[resolution] / 2 - textWidth / 2
-   const y = config.startY + config.folderAreaHeight / 2 + fontSize / 3
+   const y = config.startY + config.folderAreaHeight / 2 + 20
 
+   ctx.textBaseline = 'middle'
    ctx.fillStyle = textColor
    ctx.fillText(text, x, y, config.maxWidth)
 }
