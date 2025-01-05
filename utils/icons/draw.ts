@@ -34,7 +34,7 @@ export function drawText(ctx: Context, text: string, color: Color, resolution: R
    const selectedColor = IconColor[color]
    const textColor = `rgb(${selectedColor.red}, ${selectedColor.green}, ${selectedColor.blue})`
 
-   let fontSize = 220
+   let fontSize = 280
    const fontFamily = 'Arial'
    ctx.font = `${fontSize}px ${fontFamily}`
 

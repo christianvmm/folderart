@@ -32,17 +32,16 @@ export function FolderEditor() {
       onChangeConfig('color', COLORS[idx].value)
    }
 
-   function proccessImageFiles(files: FileList) {
-      const file = files[0]
-
-      if (file && file.type.includes('image')) {
+   function proccessImageFile(file: File) {
+      if (file.type.includes('image')) {
          onChangeConfig('icon', file)
       }
    }
 
    function onDropHandler(e: DragEvent<HTMLElement>) {
       const files = e.dataTransfer?.files
-      proccessImageFiles(files)
+      const file = files[0]
+      proccessImageFile(file)
    }
 
    async function onDownload() {
@@ -58,11 +57,12 @@ export function FolderEditor() {
 
    useEffect(() => {
       const onPaste = (e: ClipboardEvent) => {
-         e.preventDefault()
-
          const clipboardData = e.clipboardData
-         if (clipboardData) {
-            proccessImageFiles(clipboardData.files)
+         const file = clipboardData?.files[0]
+
+         if (file) {
+            e.preventDefault()
+            proccessImageFile(file)
          }
       }
 
