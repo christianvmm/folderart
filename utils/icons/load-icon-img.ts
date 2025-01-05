@@ -3,7 +3,7 @@ import { Config } from '@/utils/icons/types'
 import { loadImage } from '@/utils/load-image'
 
 export async function loadIconImg(icon: Config['icon']): Promise<HTMLImageElement | null> {
-   const isDefaultIcon = typeof icon === 'string'
+   const isDefaultIcon = typeof icon === 'string' && icon.length
 
    if (isDefaultIcon) {
       return await loadImage(getIconPath(icon))

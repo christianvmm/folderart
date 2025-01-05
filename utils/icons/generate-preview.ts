@@ -1,5 +1,5 @@
 import { Canvas, Config, Context } from './types'
-import { Resolution } from '@/utils/icons/consts'
+import { SHADOW_SIZE, Resolution, ShadowColor } from '@/utils/icons/consts'
 import { Dimension, getIconDimension } from './format-icon'
 import { createIcon } from '@/utils/icons/create-icon'
 import { loadIconImg } from '@/utils/icons/load-icon-img'
@@ -7,7 +7,7 @@ import { drawFolder, drawIcon, drawText } from '@/utils/icons/draw'
 
 export async function generatePreview(canvas: Canvas, ctx: Context, config: Config) {
    /**
-    * Preload Icon
+    * Preload Icon to avoid flickering
     */
    const resolution = Resolution.Retina512
    const iconImg: HTMLImageElement | null = await loadIconImg(config.icon)
@@ -25,14 +25,24 @@ export async function generatePreview(canvas: Canvas, ctx: Context, config: Conf
    await drawFolder(ctx, canvas, resolution, config.color)
 
    /**
+    * Add Shadow
+    */
+   ctx.shadowColor = ShadowColor[config.color]
+   ctx.shadowOffsetY = SHADOW_SIZE
+   ctx.shadowBlur = SHADOW_SIZE
+   ctx.globalCompositeOperation = 'source-over'
+
+   /**
     * Draw Icon
     */
    if (icon && dimension) {
-      drawIcon(ctx, icon, config.color, dimension, resolution)
+      drawIcon(ctx, icon, dimension, resolution)
    }
 
    /**
     * Draw Text
     */
-   drawText(ctx, 'hi', config.color)
+   if (config.text) {
+      drawText(ctx, config.text, config.color, resolution)
+   }
 }

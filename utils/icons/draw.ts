@@ -1,8 +1,9 @@
 import { loadImage } from '@/utils/load-image'
-import { ICON_SHADOW_SIZE, IconColor, Resolution, ShadowColor, Size } from '@/utils/icons/consts'
+import { IconColor, Resolution, Size } from '@/utils/icons/consts'
 import { getFolderPath } from './common'
 import { Canvas, Color, Context } from './types'
 import { Dimension, getIconPosition } from './format-icon'
+import { createConstraints } from '@/utils/icons/create-constraints'
 
 export async function drawFolder(
    ctx: Context,
@@ -20,28 +21,33 @@ export async function drawFolder(
 export function drawIcon(
    ctx: Context,
    icon: HTMLImageElement,
-   color: Color,
    dimension: Dimension,
    resolution: Resolution
 ) {
-   ctx.shadowColor = ShadowColor[color]
-   ctx.shadowOffsetY = ICON_SHADOW_SIZE
-   ctx.shadowBlur = ICON_SHADOW_SIZE
-   ctx.globalCompositeOperation = 'source-over'
-
    const { x, y } = getIconPosition(dimension.width, dimension.height, resolution)
    ctx.drawImage(icon, x, y, dimension.width, dimension.height)
 }
 
-export function drawText(ctx: Context, text: string, color: Color) {
-   const x = 400,
-      y = 400
+export function drawText(ctx: Context, text: string, color: Color, resolution: Resolution) {
+   const config = createConstraints(resolution)
 
    const selectedColor = IconColor[color]
    const textColor = `rgb(${selectedColor.red}, ${selectedColor.green}, ${selectedColor.blue})`
-   const borderColor = ShadowColor[color]
-   ctx.font = '220px Arial'
+
+   let fontSize = 220
+   const fontFamily = 'Arial'
+   ctx.font = `${fontSize}px ${fontFamily}`
+
+   // Dynamically adjust font size to fit within maxWidth
+   while (ctx.measureText(text).width > config.maxWidth) {
+      fontSize -= 1
+      ctx.font = `${fontSize}px ${fontFamily}`
+   }
+
+   const textWidth = ctx.measureText(text).width
+   const x = Size[resolution] / 2 - textWidth / 2
+   const y = config.startY + config.folderAreaHeight / 2 + fontSize / 4
+
    ctx.fillStyle = textColor
-   ctx.strokeStyle = borderColor
-   ctx.fillText(text, x + 10, y + 30)
+   ctx.fillText(text, x, y, config.maxWidth)
 }

@@ -4,7 +4,7 @@ import { OnChangeConfig } from '@/app/components/FolderEditor'
 import { DownloadIcon, FolderIcon } from '@/icons'
 import { Config } from '@/utils/icons'
 import { useRef } from 'react'
-import { devIcons } from './defaultIcons'
+import { defaultIcons } from './defaultIcons'
 import { COLORS } from '@/utils/icons/consts'
 
 export function Configuration({
@@ -48,6 +48,14 @@ export function Configuration({
             }}
          />
 
+         <input
+            className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none'
+            placeholder='Text'
+            value={configuration.text}
+            onChange={(e) => onChangeConfig('text', e.target.value)}
+            maxLength={15}
+         />
+
          <div>
             <select
                className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none cursor-pointer mt-2'
@@ -83,7 +91,7 @@ export function Configuration({
          </select>
 
          <ul className='hidden md:grid md:grid-cols-6 lg:grid-cols-7 gap-3'>
-            {devIcons.map((icon, i) => {
+            {defaultIcons.map((icon, i) => {
                const selected = configuration.icon === icon.name
 
                return (

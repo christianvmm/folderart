@@ -158,4 +158,4 @@ export const ShadowColor: Record<Color, string> = {
    black: '#5F5F5F',
 }
 
-export const ICON_SHADOW_SIZE = 3
+export const SHADOW_SIZE = 3

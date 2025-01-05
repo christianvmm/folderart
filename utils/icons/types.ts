@@ -21,6 +21,7 @@ export type IconConstraints = {
 export type Config = {
    adjustColor: number
    icon?: File | string
+   text: string
    color: Color
 }
 
@@ -30,18 +31,4 @@ export type Canvas = {
    toDataURL(type?: string | undefined, quality?: any): string
 }
 
-export type Context = {
-   drawImage: (image: any, x: number, y: number, w: number, h: number) => void
-   shadowColor: string
-   shadowOffsetY: number
-   shadowBlur: number
-   globalCompositeOperation: GlobalCompositeOperation
-   getImageData: (
-      sx: number,
-      sy: number,
-      sw: number,
-      sh: number,
-      settings?: ImageDataSettings | undefined
-   ) => ImageData
-   putImageData: (imagedata: ImageData, dx: number, dy: number) => void
-}
+export type Context = CanvasRenderingContext2D

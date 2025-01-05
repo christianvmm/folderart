@@ -14,7 +14,8 @@ export function FolderEditor() {
    const [configuration, setConfiguration] = useState<Config>({
       color: 'default-dark',
       adjustColor: 1,
-      icon: 'github',
+      icon: '',
+      text: '',
    })
    const [canvasRef, loading] = useUpdatePreview(configuration)
 
@@ -45,7 +46,7 @@ export function FolderEditor() {
    }
 
    async function onDownload() {
-      if (!configuration.icon || !canvasRef.current) return
+      if (!canvasRef.current) return
 
       const image = canvasRef.current.toDataURL()
 

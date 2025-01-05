@@ -9,8 +9,13 @@ import TSIcon from '@/public/icons/ts.svg'
 import GitIcon from '@/public/icons/git.svg'
 import VsCodeIcon from '@/public/icons/vscode.svg'
 import NextIcon from '@/public/icons/next.svg'
+import EmptyIcon from '@/public/icons/empty.svg'
 
-export const devIcons = [
+export const defaultIcons = [
+   {
+      name: '',
+      src: EmptyIcon,
+   },
    {
       name: 'github',
       src: GithubIcon,
