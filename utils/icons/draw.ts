@@ -46,7 +46,7 @@ export function drawText(ctx: Context, text: string, color: Color, resolution: R
 
    const textWidth = ctx.measureText(text).width
    const x = Size[resolution] / 2 - textWidth / 2
-   const y = config.startY + config.folderAreaHeight / 2 + fontSize / 4
+   const y = config.startY + config.folderAreaHeight / 2 + fontSize / 3
 
    ctx.fillStyle = textColor
    ctx.fillText(text, x, y, config.maxWidth)
