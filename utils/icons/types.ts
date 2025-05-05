@@ -1,14 +1,18 @@
 export type Color =
-   | 'default-dark'
-   | 'default-light'
-   | 'green'
-   | 'lime'
-   | 'yellow'
-   | 'orange'
-   | 'red'
-   | 'purple'
-   | 'gray'
-   | 'black'
+   | 'windows-11-default'
+   
+   | 'mac-os-default-dark'
+   | 'mac-os-default-light'
+   | 'mac-os-green'
+   | 'mac-os-lime'
+   | 'mac-os-yellow'
+   | 'mac-os-orange'
+   | 'mac-os-red'
+   | 'mac-os-purple'
+   | 'mac-os-gray'
+   | 'mac-os-black'
+
+export type OS = 'windows-11' | 'mac-os'
 
 export type IconConstraints = {
    maxWidth: number
@@ -20,6 +24,7 @@ export type IconConstraints = {
 
 export type Config = {
    adjustColor: number
+   os: OS
    icon?: File | string
    text: string
    color: Color

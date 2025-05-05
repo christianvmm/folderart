@@ -5,7 +5,7 @@ import { DownloadIcon, FolderIcon } from '@/icons'
 import { Config } from '@/utils/icons'
 import { useRef } from 'react'
 import { defaultIcons } from './defaultIcons'
-import { COLORS } from '@/utils/icons/consts'
+import { MACOS_COLORS, SO, WINDOWS_COLORS } from '@/utils/icons/consts'
 
 export function Configuration({
    configuration,
@@ -22,6 +22,14 @@ export function Configuration({
       if (inputRef.current) {
          inputRef.current.click()
       }
+   }
+
+   let colors = []
+
+   if (configuration.os === 'mac-os') {
+      colors = MACOS_COLORS
+   } else {
+      colors = WINDOWS_COLORS
    }
 
    return (
@@ -59,12 +67,30 @@ export function Configuration({
          <div>
             <select
                className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none cursor-pointer mt-2'
+               value={configuration.os}
+               onChange={(e) => {
+                  onChangeConfig('os', e.target.value as Config['os'])
+               }}
+            >
+               {SO.map((so) => {
+                  return (
+                     <option value={so.value} key={so.value}>
+                        {so.label}
+                     </option>
+                  )
+               })}
+            </select>
+         </div>
+
+         <div>
+            <select
+               className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none cursor-pointer mt-2'
                value={configuration.color}
                onChange={(e) => {
                   onChangeConfig('color', e.target.value as Config['color'])
                }}
             >
-               {COLORS.map((color) => {
+               {colors.map((color) => {
                   return (
                      <option value={color.value} key={color.value}>
                         {color.label}

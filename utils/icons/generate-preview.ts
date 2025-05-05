@@ -22,7 +22,7 @@ export async function generatePreview(canvas: Canvas, ctx: Context, config: Conf
    /**
     * Draw Folder
     */
-   await drawFolder(ctx, canvas, resolution, config.color)
+   await drawFolder(ctx, canvas, resolution, config.os, config.color)
 
    /**
     * Add Shadow
