@@ -167,9 +167,9 @@ export const IconColor: Record<Color, RGB> = {
       blue: 17,
    },
    'windows-11-default': {
-      red: 240,
-      green: 175,
-      blue: 24,
+      red: 180,
+      green: 126,
+      blue: 1,
    },
 }
 
