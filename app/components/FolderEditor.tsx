@@ -66,15 +66,34 @@ export function FolderEditor() {
       proccessImageFile(file)
    }
 
-   async function onDownload() {
-      if (!canvasRef.current) return
+   function downloadAsIco(canvas: HTMLCanvasElement) {
+      canvas.toBlob((blob) => {
+         if (!blob) return
 
-      const image = canvasRef.current.toDataURL()
+         const a = document.createElement('a')
+         document.body.appendChild(a)
+         a.download = `${filename}.ico`
+         a.href = window.URL.createObjectURL(blob)
+         a.click()
+      })
+   }
 
+   function downloadAsPNG(canvas: HTMLCanvasElement) {
+      const image = canvas.toDataURL()
       const link = document.createElement('a')
       link.setAttribute('download', `${filename}.png`)
       link.setAttribute('href', image)
       link.click()
+   }
+
+   async function onDownload() {
+      if (!canvasRef.current) return
+
+      if (configuration.os === 'mac-os') {
+         downloadAsPNG(canvasRef.current)
+      } else {
+         downloadAsIco(canvasRef.current)
+      }
    }
 
    useEffect(() => {
