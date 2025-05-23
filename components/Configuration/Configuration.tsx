@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Button } from '@/components/Button'
 import { OnChangeConfig } from '@/components/FolderEditor'
-import { DownloadIcon, FolderIcon } from '@/icons'
+import { DownloadIcon, FolderIcon, LoaderIcon } from '@/icons'
 import { Config } from '@/utils/icons'
 import { useRef } from 'react'
 import { defaultIcons } from './defaultIcons'
@@ -11,10 +11,12 @@ export function Configuration({
    configuration,
    onChangeConfig,
    downloadFile,
+   downloading,
 }: {
    configuration: Config
    onChangeConfig: OnChangeConfig
    downloadFile: () => void
+   downloading: boolean
 }) {
    const inputRef = useRef<HTMLInputElement>(null)
 
@@ -145,8 +147,16 @@ export function Configuration({
             <span>Custom Icon</span>
          </Button>
 
-         <Button className='w-full' onClick={() => downloadFile()}>
-            <DownloadIcon className='h-5 w-5 stroke-2' />
+         <Button
+            className={'w-full ' + (downloading ? 'opacity-50' : '')}
+            disabled={downloading}
+            onClick={() => downloadFile()}
+         >
+            {downloading ? (
+               <LoaderIcon className='h-5 w-5 animate-spin' />
+            ) : (
+               <DownloadIcon className='h-5 w-5 stroke-2' />
+            )}
 
             <span>Download</span>
          </Button>

@@ -22,6 +22,7 @@ const defaultWindows = {
 export type OnChangeConfig = <T extends keyof Config>(key: T, value: Config[T]) => void
 
 export function FolderEditor() {
+   const [downloading, setDownloading] = useState(false)
    const [filename] = useState('icon')
    const [configuration, setConfiguration] = useState<Config>({
       ...defaultMacOs,
@@ -71,10 +72,15 @@ export function FolderEditor() {
    async function onDownload() {
       if (!canvasRef.current) return
 
-      if (configuration.os === 'mac-os') {
-         canvasToPng(canvasRef.current, filename)
-      } else {
-         canvasToIco(canvasRef.current, filename)
+      try {
+         if (configuration.os === 'mac-os') {
+            canvasToPng(canvasRef.current, filename)
+         } else {
+            setDownloading(true)
+            await canvasToIco(canvasRef.current, filename)
+         }
+      } finally {
+         setDownloading(false)
       }
    }
 
@@ -102,6 +108,7 @@ export function FolderEditor() {
             configuration={configuration}
             onChangeConfig={onChangeConfig}
             downloadFile={onDownload}
+            downloading={downloading}
          />
 
          <div className='flex flex-col-reverse md:flex-col justify-between items-center relative md:flex-1 md:min-h-[calc(100vh_-_40px)] pt-5 md:pt-0 w-full'>
