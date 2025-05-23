@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Button } from '@/components/Button'
-import { OnChangeConfig } from '@/app/components/FolderEditor'
+import { OnChangeConfig } from '@/components/FolderEditor'
 import { DownloadIcon, FolderIcon } from '@/icons'
 import { Config } from '@/utils/icons'
 import { useRef } from 'react'

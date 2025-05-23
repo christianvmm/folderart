@@ -1,8 +1,8 @@
 import { Canvas, Config, Context } from './types'
 import { SHADOW_SIZE, Resolution, ShadowColor } from '@/utils/icons/consts'
-import { Dimension, getIconDimension } from './format-icon'
-import { createIcon } from '@/utils/icons/create-icon'
-import { loadIconImg } from '@/utils/icons/load-icon-img'
+import { Dimension, getIconDimension } from './formatIcon'
+import { createIcon } from '@/utils/icons/createIcon'
+import { loadIconImg } from '@/utils/icons/loadIconImg'
 import { drawFolder, drawIcon, drawText } from '@/utils/icons/draw'
 
 export async function generatePreview(canvas: Canvas, ctx: Context, config: Config) {

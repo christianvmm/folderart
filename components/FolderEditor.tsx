@@ -1,11 +1,13 @@
 'use client'
-import { Folder } from '@/app/components/Folder'
+import { Folder } from '@/components/Folder'
 import { type DragEvent, useEffect, useState } from 'react'
-import { Configuration } from '@/app/components/Configuration'
+import { Configuration } from '@/components/Configuration'
 import { type Config } from '@/utils/icons'
 import { useDragNDrop, useUpdatePreview } from '@/hooks'
-import { HowToUse } from '@/app/components/HowToUse'
+import { HowToUse } from '@/components/HowToUse'
 import { MACOS_COLORS } from '@/utils/icons/consts'
+import { canvasToPng } from '@/utils/canvasToPng'
+import { canvasToIco } from '@/utils/canvasToIco'
 
 const defaultMacOs = {
    os: 'mac-os',
@@ -66,33 +68,13 @@ export function FolderEditor() {
       proccessImageFile(file)
    }
 
-   function downloadAsIco(canvas: HTMLCanvasElement) {
-      canvas.toBlob((blob) => {
-         if (!blob) return
-
-         const a = document.createElement('a')
-         document.body.appendChild(a)
-         a.download = `${filename}.ico`
-         a.href = window.URL.createObjectURL(blob)
-         a.click()
-      })
-   }
-
-   function downloadAsPNG(canvas: HTMLCanvasElement) {
-      const image = canvas.toDataURL()
-      const link = document.createElement('a')
-      link.setAttribute('download', `${filename}.png`)
-      link.setAttribute('href', image)
-      link.click()
-   }
-
    async function onDownload() {
       if (!canvasRef.current) return
 
       if (configuration.os === 'mac-os') {
-         downloadAsPNG(canvasRef.current)
+         canvasToPng(canvasRef.current, filename)
       } else {
-         downloadAsIco(canvasRef.current)
+         canvasToIco(canvasRef.current, filename)
       }
    }
 
@@ -124,7 +106,8 @@ export function FolderEditor() {
 
          <div className='flex flex-col-reverse md:flex-col justify-between items-center relative md:flex-1 md:min-h-[calc(100vh_-_40px)] pt-5 md:pt-0 w-full'>
             <p className='hidden md:block text-sm'>
-               <span className='text-zinc-500'> FolderArt / </span> {filename}.png
+               <span className='text-zinc-500'> FolderArt / </span> {filename}.
+               {configuration.os === 'windows-11' ? 'png' : 'ico'}
             </p>
 
             <Folder loading={loading} canvasRef={canvasRef} onChangeColor={onChangeColor} />

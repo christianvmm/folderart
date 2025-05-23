@@ -1,7 +1,7 @@
 'use client'
 import { QuestionMarkIcon } from '@/icons'
 import { useState } from 'react'
-import SetIconGif from '../../public/set-icon.gif'
+import SetIconGif from '../public/set-icon.gif'
 
 import Image from 'next/image'
 

@@ -1,4 +1,4 @@
-import { FolderEditor } from '@/app/components/FolderEditor'
+import { FolderEditor } from '@/components/FolderEditor'
 
 export default function Home() {
    return (

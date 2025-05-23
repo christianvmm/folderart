@@ -1,4 +1,4 @@
-import { createConstraints } from './create-constraints'
+import { createConstraints } from './createConstraints'
 import { Resolution, Size } from './consts'
 
 export function getIconPosition(width: number, height: number, resolution: Resolution) {
