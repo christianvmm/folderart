@@ -1,11 +1,11 @@
 'use client'
 import { QuestionMarkIcon } from '@/icons'
 import { useState } from 'react'
-import SetIconGif from '../public/set-icon.gif'
-
+import HowToUseMacOSGif from '../public/how-to-use-macos.gif'
 import Image from 'next/image'
+import { OS } from '@/utils/icons'
 
-export function HowToUse() {
+export function HowToUse({ os }: { os: OS }) {
    const [open, setOpen] = useState(false)
 
    return (
@@ -39,35 +39,74 @@ export function HowToUse() {
                }
             >
                <div className='w-full h-full'>
-                  <h1 className='text-lg font-semibold mb-4'>How to use</h1>
+                  <h1 className='text-lg font-semibold mb-4'>
+                     How to use ({os === 'mac-os' ? 'macOS' : 'Windows'})
+                  </h1>
 
-                  <ol className='text-zinc-600 space-y-4'>
-                     <li>
-                        1. <span className='font-medium'>Select</span> an icon or{' '}
-                        <span className='font-medium'>upload</span> a custom one.
-                     </li>
-                     <li>
-                        2. <span className='font-medium'>Download</span> the icon.
-                     </li>
-
-                     <li>
-                        3. <span className='font-medium'>Choose File &gt; Get Info</span> in the
-                        menu bar.
-                     </li>
-
-                     <li>
-                        4. <span className='font-medium'>Drag and Drop</span> the custom icon into
-                        the folder.
-                     </li>
-
-                     <Image
-                        src={SetIconGif}
-                        alt='Video of how to set a custom folder icon in macOS'
-                     />
-                  </ol>
+                  {os === 'mac-os' ? <MacOS /> : <Windows />}
                </div>
             </div>
          </div>
       </>
+   )
+}
+
+function MacOS() {
+   return (
+      <ol className='text-zinc-600 space-y-4'>
+         <li>
+            1. <span className='font-medium'>Select</span> an icon or{' '}
+            <span className='font-medium'>upload</span> a custom one.
+         </li>
+         <li>
+            2. <span className='font-medium'>Download</span> the icon.
+         </li>
+
+         <li>
+            3. <span className='font-medium'>Choose File &gt; Get Info</span> in the menu bar.
+         </li>
+
+         <li>
+            4. <span className='font-medium'>Drag and Drop</span> the custom icon into the folder.
+         </li>
+
+         <Image
+            src={HowToUseMacOSGif}
+            alt='Video of how to set a custom folder icon in macOS'
+            unoptimized
+         />
+      </ol>
+   )
+}
+
+function Windows() {
+   return (
+      <ol className='text-zinc-600 space-y-4'>
+         <li>
+            1. <span className='font-medium'>Select</span> an icon or{' '}
+            <span className='font-medium'>upload</span> a custom one.
+         </li>
+         <li>
+            2. <span className='font-medium'>Download</span> the icon.
+         </li>
+
+         <li>
+            3. Right-click on the folder, then select{' '}
+            <span className='font-medium'>Properties &gt; Customize &gt; Change Icon</span>.
+         </li>
+         <li>
+            4. <span className='font-medium'>Browse</span> to the location of your downloaded icon
+            and <span className='font-medium'>select</span> it.
+         </li>
+         <li>
+            5. Click <span className='font-medium'>OK</span>, then{' '}
+            <span className='font-medium'>Apply</span>, and finally{' '}
+            <span className='font-medium'>OK</span> again to confirm.
+         </li>
+
+         <video autoPlay controls>
+            <source src='/how-to-use-windows.mp4' />
+         </video>
+      </ol>
    )
 }

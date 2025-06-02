@@ -132,7 +132,7 @@ export function FolderEditor() {
                   </a>
                </p>
 
-               <HowToUse />
+               <HowToUse os={configuration.os} />
             </div>
          </div>
       </div>
