@@ -1,15 +1,17 @@
-import { IconConstraints, Color, OS } from './types'
+import { IconConstraints, Color, OS as OS_T } from './types'
+import MacOSIcon from '@/public/apple-logo.svg'
+import Windows11Icon from '@/public/windows-11-logo.svg'
 
-export const SO: { value: OS; label: string; icon: string }[] = [
+export const OS: { value: OS_T; label: string; icon: string }[] = [
    {
       value: 'mac-os',
       label: 'macOS',
-      icon: '/apple-logo.svg'
+      icon: MacOSIcon,
    },
    {
       value: 'windows-11',
       label: 'Windows 11',
-      icon: '/windows-11-logo.svg'
+      icon: Windows11Icon,
    },
 ]
 

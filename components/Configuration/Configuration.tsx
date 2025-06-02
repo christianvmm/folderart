@@ -5,7 +5,7 @@ import { DownloadIcon, FolderIcon, LoaderIcon } from '@/icons'
 import { Config } from '@/utils/icons'
 import { useRef } from 'react'
 import { defaultIcons } from './defaultIcons'
-import { MACOS_COLORS, SO, WINDOWS_COLORS } from '@/utils/icons/consts'
+import { MACOS_COLORS, OS, WINDOWS_COLORS } from '@/utils/icons/consts'
 
 export function Configuration({
    configuration,
@@ -45,12 +45,12 @@ export function Configuration({
             <fieldset className='mt-2'>
                <legend className='text-sm font-medium flex items-center gap-2'>OS</legend>
                <div className='flex gap-3 mt-2'>
-                  {SO.map((so) => (
+                  {OS.map((os) => (
                      <label
-                        key={so.value}
+                        key={os.value}
                         className={`cursor-pointer p-3 rounded-xl border flex items-center gap-3 transition-all
             ${
-               configuration.os === so.value
+               configuration.os === os.value
                   ? 'border-zinc-400 ring-2 ring-zinc-300 bg-zinc-100'
                   : 'border-zinc-200 hover:bg-zinc-50'
             }`}
@@ -58,13 +58,20 @@ export function Configuration({
                         <input
                            type='radio'
                            name='os'
-                           value={so.value}
-                           checked={configuration.os === so.value}
-                           onChange={() => onChangeConfig('os', so.value as Config['os'])}
+                           value={os.value}
+                           checked={configuration.os === os.value}
+                           onChange={() => onChangeConfig('os', os.value as Config['os'])}
                            className='sr-only'
                         />
-                        <img src={so.icon} alt={`${so.label} logo`} className='w-6 h-6' />
-                        <span className='text-sm font-medium'>{so.label}</span>
+
+                        <Image
+                           priority
+                           alt={`${os.label} icon`}
+                           src={os.icon}
+                           className='w-6 h-6'
+                        />
+
+                        <span className='text-sm font-medium'>{os.label}</span>
                      </label>
                   ))}
                </div>
