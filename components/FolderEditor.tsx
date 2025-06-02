@@ -114,7 +114,7 @@ export function FolderEditor() {
          <div className='flex flex-col-reverse md:flex-col justify-between items-center relative md:flex-1 md:min-h-[calc(100vh_-_40px)] pt-5 md:pt-0 w-full'>
             <p className='hidden md:block text-sm'>
                <span className='text-zinc-500'> FolderArt / </span> {filename}.
-               {configuration.os === 'windows-11' ? 'png' : 'ico'}
+               {configuration.os === 'mac-os' ? 'png' : 'ico'}
             </p>
 
             <Folder loading={loading} canvasRef={canvasRef} onChangeColor={onChangeColor} />

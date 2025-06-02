@@ -1,13 +1,15 @@
 import { IconConstraints, Color, OS } from './types'
 
-export const SO: { value: OS; label: string }[] = [
+export const SO: { value: OS; label: string; icon: string }[] = [
    {
       value: 'mac-os',
       label: 'macOS',
+      icon: '/apple-logo.svg'
    },
    {
       value: 'windows-11',
       label: 'Windows 11',
+      icon: '/windows-11-logo.svg'
    },
 ]
 
