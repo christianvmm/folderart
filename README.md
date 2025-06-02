@@ -5,7 +5,7 @@
 <div align="center">
 
 <p align="center">
-    Create custom folder icons for macOS.
+    Create custom folder icons for macOS and Windows 11.
     <br />
     <a href="https://folderart.christianvm.dev"><strong>Live Demo »</strong></a>
     <br />
@@ -20,7 +20,9 @@
 
 ### Features
 
-- [x] ⚛️  Default Icons
+- [x] 💻 macOS and Windows 11 support
+- [x] 💬 Custom Text
+- [x] ⚛️ Default Icons
 - [x] 📁 Custom Icons
 - [x] 🎨 Change Folder Color
 - [x] 💻 Live Preview
