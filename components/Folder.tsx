@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import fallbackFolder from '../../public/fallback-folder.png'
+import fallbackFolder from '../public/fallback-folder.png'
 import { RefObject } from 'react'
 
 export function Folder({

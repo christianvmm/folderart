@@ -1,18 +1,31 @@
 'use client'
-import { Folder } from '@/app/components/Folder'
+import { Folder } from '@/components/Folder'
 import { type DragEvent, useEffect, useState } from 'react'
-import { Configuration } from '@/app/components/Configuration'
+import { Configuration } from '@/components/Configuration'
 import { type Config } from '@/utils/icons'
 import { useDragNDrop, useUpdatePreview } from '@/hooks'
-import { HowToUse } from '@/app/components/HowToUse'
-import { COLORS } from '@/utils/icons/consts'
+import { HowToUse } from '@/components/HowToUse'
+import { MACOS_COLORS } from '@/utils/icons/consts'
+import { canvasToPng } from '@/utils/canvasToPng'
+import { canvasToIco } from '@/utils/canvasToIco'
+
+const defaultMacOs = {
+   os: 'mac-os',
+   color: 'mac-os-default-dark',
+} as const
+
+const defaultWindows = {
+   os: 'windows-11',
+   color: 'windows-11-default',
+} as const
 
 export type OnChangeConfig = <T extends keyof Config>(key: T, value: Config[T]) => void
 
 export function FolderEditor() {
+   const [downloading, setDownloading] = useState(false)
    const [filename] = useState('icon')
    const [configuration, setConfiguration] = useState<Config>({
-      color: 'default-dark',
+      ...defaultMacOs,
       adjustColor: 1,
       icon: '',
       text: '',
@@ -20,6 +33,18 @@ export function FolderEditor() {
    const [canvasRef, loading] = useUpdatePreview(configuration)
 
    const onChangeConfig: OnChangeConfig = async (key, value) => {
+      if (key === 'os') {
+         const color = value === 'mac-os' ? defaultMacOs.color : defaultWindows.color
+
+         setConfiguration((prev) => ({
+            ...prev,
+            [key]: value,
+            color,
+         }))
+
+         return
+      }
+
       setConfiguration((prev) => ({
          ...prev,
          [key]: value,
@@ -27,9 +52,9 @@ export function FolderEditor() {
    }
 
    function onChangeColor() {
-      const currentIdx = COLORS.findIndex((color) => color.value === configuration.color)
-      const idx = (currentIdx + 1) % COLORS.length
-      onChangeConfig('color', COLORS[idx].value)
+      const currentIdx = MACOS_COLORS.findIndex((color) => color.value === configuration.color)
+      const idx = (currentIdx + 1) % MACOS_COLORS.length
+      onChangeConfig('color', MACOS_COLORS[idx].value)
    }
 
    function proccessImageFile(file: File) {
@@ -47,12 +72,16 @@ export function FolderEditor() {
    async function onDownload() {
       if (!canvasRef.current) return
 
-      const image = canvasRef.current.toDataURL()
-
-      const link = document.createElement('a')
-      link.setAttribute('download', `${filename}.png`)
-      link.setAttribute('href', image)
-      link.click()
+      try {
+         if (configuration.os === 'mac-os') {
+            canvasToPng(canvasRef.current, filename)
+         } else {
+            setDownloading(true)
+            await canvasToIco(canvasRef.current, filename)
+         }
+      } finally {
+         setDownloading(false)
+      }
    }
 
    useEffect(() => {
@@ -79,11 +108,13 @@ export function FolderEditor() {
             configuration={configuration}
             onChangeConfig={onChangeConfig}
             downloadFile={onDownload}
+            downloading={downloading}
          />
 
          <div className='flex flex-col-reverse md:flex-col justify-between items-center relative md:flex-1 md:min-h-[calc(100vh_-_40px)] pt-5 md:pt-0 w-full'>
             <p className='hidden md:block text-sm'>
-               <span className='text-zinc-500'> FolderArt / </span> {filename}.png
+               <span className='text-zinc-500'> FolderArt / </span> {filename}.
+               {configuration.os === 'mac-os' ? 'png' : 'ico'}
             </p>
 
             <Folder loading={loading} canvasRef={canvasRef} onChangeColor={onChangeColor} />

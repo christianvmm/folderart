@@ -1,6 +1,6 @@
 import { getIconPath } from '@/utils/icons/common'
 import { Config } from '@/utils/icons/types'
-import { loadImage } from '@/utils/load-image'
+import { loadImage } from '@/utils/loadImage'
 
 export async function loadIconImg(icon: Config['icon']): Promise<HTMLImageElement | null> {
    const isDefaultIcon = typeof icon === 'string' && icon.length

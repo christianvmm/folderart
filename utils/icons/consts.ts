@@ -1,45 +1,72 @@
-import { IconConstraints, Color } from './types'
+import { IconConstraints, Color, OS as OS_T } from './types'
+import MacOSIcon from '@/public/apple-logo.svg'
+import Windows11Icon from '@/public/windows-11-logo.svg'
 
-export const COLORS: { value: Color; label: string }[] = [
+export const OS: { value: OS_T; label: string; icon: string }[] = [
    {
-      value: 'default-dark',
+      value: 'mac-os',
+      label: 'macOS',
+      icon: MacOSIcon,
+   },
+   {
+      value: 'windows-11',
+      label: 'Windows 11',
+      icon: Windows11Icon,
+   },
+]
+
+type ColorWithLabel = {
+   value: Color
+   label: string
+}
+
+export const MACOS_COLORS: ColorWithLabel[] = [
+   {
+      value: 'mac-os-default-dark',
       label: 'Default Dark',
    },
    {
-      value: 'default-light',
+      value: 'mac-os-default-light',
       label: 'Default Light',
    },
    {
-      value: 'green',
+      value: 'mac-os-green',
       label: 'Green',
    },
    {
-      value: 'lime',
+      value: 'mac-os-lime',
       label: 'Lime',
    },
    {
-      value: 'yellow',
+      value: 'mac-os-yellow',
       label: 'Yellow',
    },
    {
-      value: 'orange',
+      value: 'mac-os-orange',
       label: 'Orange',
    },
    {
-      value: 'red',
+      value: 'mac-os-red',
       label: 'Red',
    },
    {
-      value: 'purple',
+      value: 'mac-os-purple',
       label: 'Purple',
    },
    {
-      value: 'gray',
+      value: 'mac-os-gray',
       label: 'Gray',
    },
    {
-      value: 'black',
+      value: 'mac-os-black',
       label: 'Black',
+   },
+]
+
+export const WINDOWS_COLORS: ColorWithLabel[] = [
+   {
+      value: 'windows-11-default',
+      label: 'Default',
    },
 ]
 
@@ -93,69 +120,75 @@ export const BaseConfig: IconConstraints = {
 type RGB = { red: number; green: number; blue: number }
 
 export const IconColor: Record<Color, RGB> = {
-   'default-dark': {
+   'mac-os-default-dark': {
       red: 51,
       green: 157,
       blue: 224,
    },
-   'default-light': {
+   'mac-os-default-light': {
       red: 63,
       green: 170,
       blue: 230,
    },
-   green: {
+   'mac-os-green': {
       red: 24,
       green: 171,
       blue: 104,
    },
-   lime: {
+   'mac-os-lime': {
       red: 58,
       green: 173,
       blue: 75,
    },
-   yellow: {
+   'mac-os-yellow': {
       red: 202,
       green: 164,
       blue: 27,
    },
-   orange: {
+   'mac-os-orange': {
       red: 205,
       green: 111,
       blue: 4,
    },
-   red: {
+   'mac-os-red': {
       red: 206,
       green: 45,
       blue: 36,
    },
-   purple: {
+   'mac-os-purple': {
       red: 131,
       green: 63,
       blue: 157,
    },
-   gray: {
+   'mac-os-gray': {
       red: 102,
       green: 102,
       blue: 102,
    },
-   black: {
+   'mac-os-black': {
       red: 17,
       green: 17,
       blue: 17,
    },
+   'windows-11-default': {
+      red: 180,
+      green: 126,
+      blue: 1,
+   },
 }
 
 export const ShadowColor: Record<Color, string> = {
-   'default-dark': '#97D8FC',
-   'default-light': '#97D8FC',
-   green: '#91E2BC',
-   lime: '#99EAA4',
-   yellow: '#F4DA86',
-   orange: '#F1C287',
-   red: '#F89B97',
-   purple: '#CF9BE3',
-   gray: '#C2C2C2',
-   black: '#5F5F5F',
+   'windows-11-default': '#ffdd7b',
+   'mac-os-default-dark': '#97D8FC',
+   'mac-os-default-light': '#97D8FC',
+   'mac-os-green': '#91E2BC',
+   'mac-os-lime': '#99EAA4',
+   'mac-os-yellow': '#F4DA86',
+   'mac-os-orange': '#F1C287',
+   'mac-os-red': '#F89B97',
+   'mac-os-purple': '#CF9BE3',
+   'mac-os-gray': '#C2C2C2',
+   'mac-os-black': '#5F5F5F',
 }
 
 export const SHADOW_SIZE = 3

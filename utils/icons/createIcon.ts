@@ -1,4 +1,4 @@
-import { loadImage } from '@/utils/load-image'
+import { loadImage } from '@/utils/loadImage'
 import { Config } from './types'
 import { IconColor } from '@/utils/icons/consts'
 

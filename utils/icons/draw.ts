@@ -1,18 +1,19 @@
-import { loadImage } from '@/utils/load-image'
+import { loadImage } from '@/utils/loadImage'
 import { IconColor, Resolution, Size } from '@/utils/icons/consts'
 import { getFolderPath } from './common'
-import { Canvas, Color, Context } from './types'
-import { Dimension, getIconPosition } from './format-icon'
-import { createConstraints } from '@/utils/icons/create-constraints'
+import { Canvas, Color, Context, OS } from './types'
+import { Dimension, getIconPosition } from './formatIcon'
+import { createConstraints } from '@/utils/icons/createConstraints'
 
 export async function drawFolder(
    ctx: Context,
    canvas: Canvas,
    resolution: Resolution,
+   os: OS,
    color: Color
 ) {
    const size = Size[resolution]
-   const folder = await loadImage(getFolderPath(color))
+   const folder = await loadImage(getFolderPath(os, color))
    canvas.width = size
    canvas.height = size
    ctx.drawImage(folder, 0, 0, size, size)

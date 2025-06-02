@@ -1,2 +1,2 @@
 export * from './types'
-export * from './generate-preview'
+export * from './generatePreview'
