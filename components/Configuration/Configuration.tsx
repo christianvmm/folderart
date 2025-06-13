@@ -41,6 +41,20 @@ export function Configuration({
       >
          <h1 className='font-medium'>Configuration</h1>
 
+         <input
+            type='file'
+            accept='image/*'
+            className='hidden'
+            ref={inputRef}
+            onChange={(e) => {
+               const file = e.target.files?.[0]
+
+               if (file) {
+                  onChangeConfig('icon', file)
+               }
+            }}
+         />
+
          <div>
             <fieldset className='mt-2'>
                <legend className='text-sm font-medium flex items-center gap-2'>OS</legend>
