@@ -68,6 +68,10 @@ export const WINDOWS_COLORS: ColorWithLabel[] = [
       value: 'windows-11-default',
       label: 'Default',
    },
+   {
+      value: 'windows-11-pink',
+      label: 'Pink',
+   },
 ]
 
 export enum Resolution {
@@ -175,10 +179,16 @@ export const IconColor: Record<Color, RGB> = {
       green: 126,
       blue: 1,
    },
+   'windows-11-pink': {
+      red: 201,
+      green: 84,
+      blue: 122,
+   },
 }
 
 export const ShadowColor: Record<Color, string> = {
    'windows-11-default': '#ffdd7b',
+   'windows-11-pink': '#f8a5c2',
    'mac-os-default-dark': '#97D8FC',
    'mac-os-default-light': '#97D8FC',
    'mac-os-green': '#91E2BC',
