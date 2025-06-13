@@ -5,7 +5,7 @@ import { Configuration } from '@/components/Configuration'
 import { type Config } from '@/utils/icons'
 import { useDragNDrop, useUpdatePreview } from '@/hooks'
 import { HowToUse } from '@/components/HowToUse'
-import { MACOS_COLORS } from '@/utils/icons/consts'
+import { MACOS_COLORS, WINDOWS_COLORS } from '@/utils/icons/consts'
 import { canvasToPng } from '@/utils/canvasToPng'
 import { canvasToIco } from '@/utils/canvasToIco'
 
@@ -52,9 +52,10 @@ export function FolderEditor() {
    }
 
    function onChangeColor() {
-      const currentIdx = MACOS_COLORS.findIndex((color) => color.value === configuration.color)
-      const idx = (currentIdx + 1) % MACOS_COLORS.length
-      onChangeConfig('color', MACOS_COLORS[idx].value)
+      const COLORS = configuration.os === 'mac-os' ? MACOS_COLORS : WINDOWS_COLORS
+      const currentIdx = COLORS.findIndex((color) => color.value === configuration.color)
+      const nextIdx = (currentIdx + 1) % COLORS.length
+      onChangeConfig('color', COLORS[nextIdx].value)
    }
 
    function proccessImageFile(file: File) {
