@@ -98,7 +98,7 @@ export abstract class IconCustomizer {
       this.ctx.drawImage(this.icon, x, y, this.dimension.width, this.dimension.height)
    }
 
-   protected adjustIconColor(data: Uint8ClampedArray<ArrayBufferLike>): void {
+   protected adjustIconColor(data: Uint8ClampedArray): void {
       const COLOR = IconColor[this.config.variant]
       for (let i = 0; i < data.length; i += 4) {
          data[i] = COLOR.red

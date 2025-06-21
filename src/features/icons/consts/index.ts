@@ -5,8 +5,8 @@ import Windows11Icon from '@/public/windows-11-logo.svg'
 type Default = Pick<Config, 'iconType' | 'variant'>
 
 export const defaultMacOs: Default = {
-   iconType: 'mac-os-flat-drive',
-   variant: 'mac-os-time-machine',
+   iconType: 'mac-os',
+   variant: 'mac-os-default-dark',
 }
 
 export const defaultWindows: Default = {

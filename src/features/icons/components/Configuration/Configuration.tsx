@@ -71,7 +71,7 @@ export function Configuration({
                         key={os.value}
                         className={`cursor-pointer p-3 rounded-xl border flex items-center gap-3 transition-all
             ${
-               configuration.iconType === os.value
+               configuration.iconType.includes(os.value)
                   ? 'border-zinc-400 ring-2 ring-zinc-300 bg-zinc-100'
                   : 'border-zinc-200 hover:bg-zinc-50'
             }`}
@@ -80,7 +80,7 @@ export function Configuration({
                            type='radio'
                            name='os'
                            value={os.value}
-                           checked={configuration.iconType === os.value}
+                           checked={configuration.iconType.includes(os.value)}
                            onChange={() => {
                               if (os.value.includes('mac-os')) {
                                  onChangeConfig(defaultMacOs)
