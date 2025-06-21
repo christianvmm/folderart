@@ -22,7 +22,7 @@ export function FolderEditor() {
    const [filename] = useState('icon')
    const [configuration, setConfiguration] = useState<Config>({
       ...defaultMacOs,
-      adjustColor: 0,
+      adjustColor: 1,
       icon: '',
       text: '',
    })
