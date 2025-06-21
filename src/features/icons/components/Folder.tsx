@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import fallbackFolder from '../public/fallback-folder.png'
+import FallbackFolder from '../../../../public/fallback-folder.png'
 import { RefObject } from 'react'
 
 export function Folder({
@@ -26,7 +26,7 @@ export function Folder({
 
          {loading && (
             <Image
-               src={fallbackFolder}
+               src={FallbackFolder}
                alt='macOS folder icon '
                width={512}
                height={512}

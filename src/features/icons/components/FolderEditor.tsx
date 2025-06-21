@@ -1,80 +1,77 @@
 'use client'
-import { Folder } from '@/components/Folder'
+import { canvasToIco } from '@/src/features/icons/utils/canvasToIco'
+import { canvasToPng } from '@/src/features/icons/utils/canvasToPng'
+import { Configuration } from '@/src/features/icons/components/Configuration'
+import { Folder } from '@/src/features/icons/components/Folder'
+import { HowToUse } from '@/src/features/icons/components/HowToUse'
+import {
+   defaultMacOs,
+   defaultWindows,
+   MACOS_VARIANTS,
+   WINDOWS_OPTIONS,
+} from '@/src/features/icons/consts'
+import { type Config } from '@/src/features/icons/types'
 import { type DragEvent, useEffect, useState } from 'react'
-import { Configuration } from '@/components/Configuration'
-import { type Config } from '@/utils/icons'
-import { useDragNDrop, useUpdatePreview } from '@/hooks'
-import { HowToUse } from '@/components/HowToUse'
-import { MACOS_COLORS, WINDOWS_COLORS } from '@/utils/icons/consts'
-import { canvasToPng } from '@/utils/canvasToPng'
-import { canvasToIco } from '@/utils/canvasToIco'
+import { useDragNDrop } from '@/src/hooks/useDragNDrop'
+import { useUpdatePreview } from '@/src/features/icons/hooks/useUpdatePreview'
 
-const defaultMacOs = {
-   os: 'mac-os',
-   color: 'mac-os-default-dark',
-} as const
-
-const defaultWindows = {
-   os: 'windows-11',
-   color: 'windows-11-default',
-} as const
-
-export type OnChangeConfig = <T extends keyof Config>(key: T, value: Config[T]) => void
+export type OnChangeConfig = (data: Partial<Config>) => void
 
 export function FolderEditor() {
    const [downloading, setDownloading] = useState(false)
    const [filename] = useState('icon')
    const [configuration, setConfiguration] = useState<Config>({
       ...defaultMacOs,
-      adjustColor: 1,
+      adjustColor: 0,
       icon: '',
       text: '',
    })
    const [canvasRef, loading] = useUpdatePreview(configuration)
+   const isMacOS = configuration.iconType.includes('mac-os')
 
-   const onChangeConfig: OnChangeConfig = async (key, value) => {
-      if (key === 'os') {
-         const color = value === 'mac-os' ? defaultMacOs.color : defaultWindows.color
-
-         setConfiguration((prev) => ({
-            ...prev,
-            [key]: value,
-            color,
-         }))
-
-         return
+   const onChangeConfig: OnChangeConfig = async (data) => {
+      if (Object.keys(data).length === 1 && 'iconType' in data) {
+         data.variant = data['iconType']?.includes('mac-os')
+            ? defaultMacOs.variant
+            : defaultWindows.variant
       }
 
       setConfiguration((prev) => ({
          ...prev,
-         [key]: value,
+         ...data,
       }))
    }
 
-   function onChangeColor() {
-      const COLORS = configuration.os === 'mac-os' ? MACOS_COLORS : WINDOWS_COLORS
-      const currentIdx = COLORS.findIndex((color) => color.value === configuration.color)
-      const nextIdx = (currentIdx + 1) % COLORS.length
-      onChangeConfig('color', COLORS[nextIdx].value)
+   function onChangeVariant() {
+      const VARIANTS = isMacOS ? MACOS_VARIANTS : WINDOWS_OPTIONS
+      const currentIdx = VARIANTS.findIndex((color) => color.value === configuration.variant)
+      const nextIdx = (currentIdx + 1) % VARIANTS.length
+
+      onChangeConfig({
+         iconType: VARIANTS[nextIdx].iconType,
+         variant: VARIANTS[nextIdx].value,
+      })
    }
 
    function proccessImageFile(file: File) {
       if (file.type.includes('image')) {
-         onChangeConfig('icon', file)
+         onChangeConfig({
+            icon: file,
+         })
       }
    }
 
    function onDropHandler(e: DragEvent<HTMLElement>) {
       const files = e.dataTransfer?.files
       const file = files[0]
-      proccessImageFile(file)
+      if (e instanceof File) proccessImageFile(file)
    }
 
    async function onDownload() {
       if (!canvasRef.current) return
 
       try {
-         if (configuration.os === 'mac-os') {
+         if (isMacOS) {
             canvasToPng(canvasRef.current, filename)
          } else {
             setDownloading(true)
@@ -115,10 +112,10 @@ export function FolderEditor() {
          <div className='flex flex-col-reverse md:flex-col justify-between items-center relative md:flex-1 md:min-h-[calc(100vh_-_40px)] pt-5 md:pt-0 w-full'>
             <p className='hidden md:block text-sm'>
                <span className='text-zinc-500'> FolderArt / </span> {filename}.
-               {configuration.os === 'mac-os' ? 'png' : 'ico'}
+               {isMacOS ? 'png' : 'ico'}
             </p>
 
-            <Folder loading={loading} canvasRef={canvasRef} onChangeColor={onChangeColor} />
+            <Folder loading={loading} canvasRef={canvasRef} onChangeColor={onChangeVariant} />
 
             <div className='ml-auto flex items-center w-full md:w-auto justify-between md:justify-start gap-5'>
                <p className='text-sm'>
@@ -133,7 +130,7 @@ export function FolderEditor() {
                   </a>
                </p>
 
-               <HowToUse os={configuration.os} />
+               <HowToUse os={configuration.iconType} />
             </div>
          </div>
       </div>

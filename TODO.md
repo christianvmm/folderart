@@ -1,3 +1,0 @@
-- [ ] Create abstraction to reutilize client and server code
-- [ ] Handle errors in icon utils
-- [ ] Allow user to change filename

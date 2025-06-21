@@ -1,8 +1,20 @@
-import { IconConstraints, Color, OS as OS_T } from './types'
+import { Variant, IconType, Config } from '../types'
 import MacOSIcon from '@/public/apple-logo.svg'
 import Windows11Icon from '@/public/windows-11-logo.svg'
 
-export const OS: { value: OS_T; label: string; icon: string }[] = [
+type Default = Pick<Config, 'iconType' | 'variant'>
+
+export const defaultMacOs: Default = {
+   iconType: 'mac-os-flat-drive',
+   variant: 'mac-os-time-machine',
+}
+
+export const defaultWindows: Default = {
+   iconType: 'windows-11',
+   variant: 'windows-11-default',
+}
+
+export const OS_OPTIONS: { value: string; label: string; icon: string }[] = [
    {
       value: 'mac-os',
       label: 'macOS',
@@ -13,117 +25,103 @@ export const OS: { value: OS_T; label: string; icon: string }[] = [
       label: 'Windows 11',
       icon: Windows11Icon,
    },
-]
+] as const
 
-type ColorWithLabel = {
-   value: Color
+export type VariantItem = {
+   iconType: IconType
+   value: Variant
    label: string
 }
 
-export const MACOS_COLORS: ColorWithLabel[] = [
+export const MACOS_VARIANTS: VariantItem[] = [
    {
+      iconType: 'mac-os',
       value: 'mac-os-default-dark',
       label: 'Default Dark',
    },
    {
+      iconType: 'mac-os',
       value: 'mac-os-default-light',
       label: 'Default Light',
    },
    {
+      iconType: 'mac-os',
       value: 'mac-os-green',
       label: 'Green',
    },
    {
+      iconType: 'mac-os',
       value: 'mac-os-lime',
       label: 'Lime',
    },
    {
+      iconType: 'mac-os',
       value: 'mac-os-yellow',
       label: 'Yellow',
    },
    {
+      iconType: 'mac-os',
       value: 'mac-os-orange',
       label: 'Orange',
    },
    {
+      iconType: 'mac-os',
       value: 'mac-os-red',
       label: 'Red',
    },
    {
+      iconType: 'mac-os',
       value: 'mac-os-purple',
       label: 'Purple',
    },
    {
+      iconType: 'mac-os',
       value: 'mac-os-gray',
       label: 'Gray',
    },
    {
+      iconType: 'mac-os',
       value: 'mac-os-black',
       label: 'Black',
    },
+   {
+      iconType: 'mac-os-hd',
+      value: 'mac-os-hd-removable',
+      label: 'Hard Drive Removable',
+   },
+   {
+      iconType: 'mac-os-hd',
+      value: 'mac-os-hd-external',
+      label: 'Hard Drive External',
+   },
+   {
+      iconType: 'mac-os-flat-drive',
+      value: 'mac-os-time-machine',
+      label: 'Time Machine',
+   },
+   {
+      iconType: 'mac-os-flat-drive',
+      value: 'mac-os-file-server',
+      label: 'File Server',
+   },
 ]
 
-export const WINDOWS_COLORS: ColorWithLabel[] = [
+export const WINDOWS_OPTIONS: VariantItem[] = [
    {
+      iconType: 'windows-11',
       value: 'windows-11-default',
       label: 'Default',
    },
    {
+      iconType: 'windows-11',
       value: 'windows-11-pink',
       label: 'Pink',
    },
 ]
 
-export enum Resolution {
-   NonRetina16 = 0,
-   Retina16 = 1,
-   NonRetina32 = 2,
-   Retina32 = 3,
-   NonRetina128 = 4,
-   Retina128 = 5,
-   NonRetina256 = 6,
-   Retina256 = 7,
-   NonRetina512 = 8,
-   Retina512 = 9,
-}
-
-export const resolutions: Resolution[] = [
-   Resolution.NonRetina16,
-   Resolution.Retina16,
-   Resolution.NonRetina32,
-   Resolution.Retina32,
-   Resolution.NonRetina128,
-   Resolution.Retina128,
-   Resolution.NonRetina256,
-   Resolution.Retina256,
-   Resolution.NonRetina512,
-   Resolution.Retina512,
-]
-
-export const Size: Record<Resolution, number> = {
-   [Resolution.NonRetina16]: 16,
-   [Resolution.Retina16]: 32,
-   [Resolution.NonRetina32]: 32,
-   [Resolution.Retina32]: 64,
-   [Resolution.NonRetina128]: 128,
-   [Resolution.Retina128]: 256,
-   [Resolution.NonRetina256]: 256,
-   [Resolution.Retina256]: 512,
-   [Resolution.NonRetina512]: 512,
-   [Resolution.Retina512]: 1024,
-}
-
-export const BaseConfig: IconConstraints = {
-   maxWidth: 768,
-   maxHeight: 384,
-   preferredSize: 384,
-   folderAreaHeight: 604,
-   startY: 258,
-}
-
 type RGB = { red: number; green: number; blue: number }
 
-export const IconColor: Record<Color, RGB> = {
+export const IconColor: Record<Variant, RGB> = {
    'mac-os-default-dark': {
       red: 51,
       green: 157,
@@ -174,6 +172,26 @@ export const IconColor: Record<Color, RGB> = {
       green: 17,
       blue: 17,
    },
+   'mac-os-hd-removable': {
+      red: 40,
+      green: 40,
+      blue: 40,
+   },
+   'mac-os-hd-external': {
+      red: 70,
+      green: 50,
+      blue: 54,
+   },
+   'mac-os-time-machine': {
+      red: 13,
+      green: 80,
+      blue: 77,
+   },
+   'mac-os-file-server': {
+      red: 35,
+      green: 53,
+      blue: 74,
+   },
    'windows-11-default': {
       red: 180,
       green: 126,
@@ -186,11 +204,15 @@ export const IconColor: Record<Color, RGB> = {
    },
 }
 
-export const ShadowColor: Record<Color, string> = {
+export const ShadowColor: Record<Variant, string> = {
    'windows-11-default': '#ffdd7b',
    'windows-11-pink': '#f8a5c2',
    'mac-os-default-dark': '#97D8FC',
    'mac-os-default-light': '#97D8FC',
+   'mac-os-hd-removable': '#000000',
+   'mac-os-hd-external': '#241b1d',
+   'mac-os-time-machine': '#082b2a',
+   'mac-os-file-server': '#241b1d',
    'mac-os-green': '#91E2BC',
    'mac-os-lime': '#99EAA4',
    'mac-os-yellow': '#F4DA86',

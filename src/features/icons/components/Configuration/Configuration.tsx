@@ -1,11 +1,18 @@
 import Image from 'next/image'
-import { Button } from '@/components/Button'
-import { OnChangeConfig } from '@/components/FolderEditor'
-import { DownloadIcon, FolderIcon, LoaderIcon } from '@/icons'
-import { Config } from '@/utils/icons'
+import { Button } from '@/src/components/Button'
+import { OnChangeConfig } from '@/src/features/icons/components/FolderEditor'
+import { DownloadIcon, FolderIcon, LoaderIcon } from '@/src/icons'
+import { Config } from '@/src/features/icons/types'
 import { useRef } from 'react'
 import { defaultIcons } from './defaultIcons'
-import { MACOS_COLORS, OS, WINDOWS_COLORS } from '@/utils/icons/consts'
+import {
+   MACOS_VARIANTS,
+   OS_OPTIONS,
+   WINDOWS_OPTIONS as WINDOWS_VARIANTS,
+   VariantItem,
+   defaultMacOs,
+   defaultWindows,
+} from '@/src/features/icons/consts'
 
 export function Configuration({
    configuration,
@@ -26,18 +33,18 @@ export function Configuration({
       }
    }
 
-   let colors = []
+   let variants: VariantItem[] = []
 
-   if (configuration.os === 'mac-os') {
-      colors = MACOS_COLORS
+   if (configuration.iconType.includes('mac-os')) {
+      variants = MACOS_VARIANTS
    } else {
-      colors = WINDOWS_COLORS
+      variants = WINDOWS_VARIANTS
    }
 
    return (
       <aside
          className='relative lg:w-96 rounded-xl border border-zinc-200 p-5 flex flex-col gap-5 shadow-sm
-         md:h-[calc(100vh_-_40px)] w-full md:w-80'
+         md:h-[calc(100vh_-_40px)] w-full md:w-80 overflow-y-auto'
       >
          <h1 className='font-medium'>Configuration</h1>
 
@@ -50,7 +57,7 @@ export function Configuration({
                const file = e.target.files?.[0]
 
                if (file) {
-                  onChangeConfig('icon', file)
+                  onChangeConfig({ icon: file })
                }
             }}
          />
@@ -59,12 +66,12 @@ export function Configuration({
             <fieldset className='mt-2'>
                <legend className='text-sm font-medium flex items-center gap-2'>OS</legend>
                <div className='flex gap-3 mt-2'>
-                  {OS.map((os) => (
+                  {OS_OPTIONS.map((os) => (
                      <label
                         key={os.value}
                         className={`cursor-pointer p-3 rounded-xl border flex items-center gap-3 transition-all
             ${
-               configuration.os === os.value
+               configuration.iconType === os.value
                   ? 'border-zinc-400 ring-2 ring-zinc-300 bg-zinc-100'
                   : 'border-zinc-200 hover:bg-zinc-50'
             }`}
@@ -73,8 +80,14 @@ export function Configuration({
                            type='radio'
                            name='os'
                            value={os.value}
-                           checked={configuration.os === os.value}
-                           onChange={() => onChangeConfig('os', os.value as Config['os'])}
+                           checked={configuration.iconType === os.value}
+                           onChange={() => {
+                              if (os.value.includes('mac-os')) {
+                                 onChangeConfig(defaultMacOs)
+                              } else {
+                                 onChangeConfig(defaultWindows)
+                              }
+                           }}
                            className='sr-only'
                         />
 
@@ -101,28 +114,32 @@ export function Configuration({
                id='text'
                className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none'
                value={configuration.text}
-               onChange={(e) => onChangeConfig('text', e.target.value)}
+               onChange={(e) => onChangeConfig({ text: e.target.value })}
                maxLength={15}
             />
          </div>
 
          <div>
-            <label htmlFor='color' className='text-sm font-medium flex items-center gap-2'>
-               Color
+            <label htmlFor='variant' className='text-sm font-medium flex items-center gap-2'>
+               Variant
             </label>
 
             <select
-               id='color'
+               id='variant'
                className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none cursor-pointer mt-2'
-               value={configuration.color}
+               value={configuration.variant}
                onChange={(e) => {
-                  onChangeConfig('color', e.target.value as Config['color'])
+                  const value = e.target.value as Config['variant']
+                  const variant = variants.find((v) => v.value === value)
+                  if (!variant) return
+
+                  onChangeConfig({ variant: variant.value, iconType: variant.iconType })
                }}
             >
-               {colors.map((color) => {
+               {variants.map((variant) => {
                   return (
-                     <option value={color.value} key={color.value}>
-                        {color.label}
+                     <option value={variant.value} key={variant.value}>
+                        {variant.label}
                      </option>
                   )
                })}
@@ -142,15 +159,15 @@ export function Configuration({
                className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none cursor-pointer'
                value={configuration.adjustColor}
                onChange={(e) => {
-                  onChangeConfig('adjustColor', Number(e.target.value))
+                  onChangeConfig({ adjustColor: Number(e.target.value) })
                }}
             >
-               <option value={1}>Adapt to Folder Style</option>
+               <option value={1}>Adapt to Variant Style</option>
                <option value={0}>Use Original Icon Color</option>
             </select>
          </div>
 
-         <ul className='grid md:grid-cols-6 lg:grid-cols-7 gap-1'>
+         <ul className='grid grid-cols-6 lg:grid-cols-7 gap-1'>
             {defaultIcons.map((icon, i) => {
                const selected = configuration.icon === icon.name
 
@@ -163,7 +180,7 @@ export function Configuration({
                            : 'border-transparent hover:bg-zinc-50')
                      }
                      key={i}
-                     onClick={() => onChangeConfig('icon', icon.name)}
+                     onClick={() => onChangeConfig({ icon: icon.name })}
                   >
                      <Image
                         priority
@@ -176,13 +193,17 @@ export function Configuration({
             })}
          </ul>
 
-         <Button variant='outlined' className='w-full md:mt-auto' onClick={() => openFileExporer()}>
+         <Button
+            variant='outlined'
+            className='w-full md:mt-auto min-h-10'
+            onClick={() => openFileExporer()}
+         >
             <FolderIcon className='h-5 w-5 stroke-2' />
             <span>Custom Icon</span>
          </Button>
 
          <Button
-            className={'w-full ' + (downloading ? 'opacity-50' : '')}
+            className={'w-full min-h-10 ' + (downloading ? 'opacity-50' : '')}
             disabled={downloading}
             onClick={() => downloadFile()}
          >

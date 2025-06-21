@@ -1,11 +1,11 @@
 'use client'
-import { QuestionMarkIcon } from '@/icons'
+import { QuestionMarkIcon } from '@/src/icons'
 import { useState } from 'react'
-import HowToUseMacOSGif from '../public/how-to-use-macos.gif'
+import HowToUseMacOSGif from '../../../../public/how-to-use-macos.gif'
 import Image from 'next/image'
-import { OS } from '@/utils/icons'
+import { IconType } from '@/src/features/icons/types'
 
-export function HowToUse({ os }: { os: OS }) {
+export function HowToUse({ os }: { os: IconType }) {
    const [open, setOpen] = useState(false)
 
    return (

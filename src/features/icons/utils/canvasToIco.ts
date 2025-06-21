@@ -1,4 +1,4 @@
-import { IMAGES_API } from '@/consts'
+import { IMAGES_API } from '@/src/consts'
 
 export async function canvasToIco(canvas: HTMLCanvasElement, filename: string) {
    return new Promise<void>((resolve, reject) => {
