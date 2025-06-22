@@ -15,6 +15,7 @@ export function Folder({
    return (
       <>
          <button
+            title='Change Variant'
             className={loading ? 'hidden' : 'w-[512px] h-auto max-w-[90vw] cursor-pointer outline-none'}
             onClick={() => onChangeColor()}
          >

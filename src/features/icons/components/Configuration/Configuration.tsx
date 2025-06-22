@@ -156,6 +156,7 @@ export function Configuration({
                Icon Color
             </label>
             <select
+               id='adjustColor'
                className='h-10 border border-zinc-200 rounded-md px-3 py-2 w-full appearance-none cursor-pointer'
                value={configuration.adjustColor}
                onChange={(e) => {

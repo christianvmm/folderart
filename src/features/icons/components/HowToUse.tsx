@@ -11,6 +11,7 @@ export function HowToUse({ os }: { os: IconType }) {
    return (
       <>
          <button
+            title='How to Use'
             className='bg-zinc-950 hover:bg-zinc-800 text-white p-2 rounded-full ml-auto'
             onClick={() => setOpen(true)}
          >
@@ -19,6 +20,7 @@ export function HowToUse({ os }: { os: IconType }) {
 
          <div
             role='dialog'
+            aria-labelledby='dialog-title'
             className={
                'fixed inset-0 h-screen w-full px-6 flex items-center justify-center backdrop-brightness-50 transition-all ' +
                (open ? 'opacity-100 z-50' : 'opacity-0 -z-10')
@@ -39,7 +41,7 @@ export function HowToUse({ os }: { os: IconType }) {
                }
             >
                <div className='w-full h-full'>
-                  <h1 className='text-lg font-semibold mb-4'>
+                  <h1 className='text-lg font-semibold mb-4' id='dialog-title'>
                      How to use ({os === 'mac-os' ? 'macOS' : 'Windows'})
                   </h1>
 
@@ -53,60 +55,65 @@ export function HowToUse({ os }: { os: IconType }) {
 
 function MacOS() {
    return (
-      <ol className='text-zinc-600 space-y-4'>
-         <li>
-            1. <span className='font-medium'>Select</span> an icon or{' '}
-            <span className='font-medium'>upload</span> a custom one.
-         </li>
-         <li>
-            2. <span className='font-medium'>Download</span> the icon.
-         </li>
+      <div className='flex w-full flex-col gap-4'>
+         <ol className='text-zinc-600 flex w-full flex-col gap-4'>
+            <li>
+               1. <span className='font-medium'>Select</span> an icon or{' '}
+               <span className='font-medium'>upload</span> a custom one.
+            </li>
+            <li>
+               2. <span className='font-medium'>Download</span> the icon.
+            </li>
 
-         <li>
-            3. <span className='font-medium'>Choose File &gt; Get Info</span> in the menu bar.
-         </li>
+            <li>
+               3. <span className='font-medium'>Choose File &gt; Get Info</span> in the menu bar.
+            </li>
 
-         <li>
-            4. <span className='font-medium'>Drag and Drop</span> the custom icon into the folder.
-         </li>
+            <li>
+               4. <span className='font-medium'>Drag and Drop</span> the custom icon into the
+               folder.
+            </li>
+         </ol>
 
          <Image
             src={HowToUseMacOSGif}
             alt='Video of how to set a custom folder icon in macOS'
             unoptimized
          />
-      </ol>
+      </div>
    )
 }
 
 function Windows() {
    return (
-      <ol className='text-zinc-600 space-y-4'>
-         <li>
-            1. <span className='font-medium'>Select</span> an icon or{' '}
-            <span className='font-medium'>upload</span> a custom one.
-         </li>
-         <li>
-            2. <span className='font-medium'>Download</span> the icon.
-         </li>
+      <div className='flex w-full flex-col gap-4'>
+         <ol className='text-zinc-600 flex w-full flex-col gap-4'>
+            <li>
+               1. <span className='font-medium'>Select</span> an icon or{' '}
+               <span className='font-medium'>upload</span> a custom one.
+            </li>
+            <li>
+               2. <span className='font-medium'>Download</span> the icon.
+            </li>
 
-         <li>
-            3. Right-click on the folder, then select{' '}
-            <span className='font-medium'>Properties &gt; Customize &gt; Change Icon</span>.
-         </li>
-         <li>
-            4. <span className='font-medium'>Browse</span> to the location of your downloaded icon
-            and <span className='font-medium'>select</span> it.
-         </li>
-         <li>
-            5. Click <span className='font-medium'>OK</span>, then{' '}
-            <span className='font-medium'>Apply</span>, and finally{' '}
-            <span className='font-medium'>OK</span> again to confirm.
-         </li>
+            <li>
+               3. Right-click on the folder, then select{' '}
+               <span className='font-medium'>Properties &gt; Customize &gt; Change Icon</span>.
+            </li>
+            <li>
+               4. <span className='font-medium'>Browse</span> to the location of your downloaded
+               icon and <span className='font-medium'>select</span> it.
+            </li>
+            <li>
+               5. Click <span className='font-medium'>OK</span>, then{' '}
+               <span className='font-medium'>Apply</span>, and finally{' '}
+               <span className='font-medium'>OK</span> again to confirm.
+            </li>
+         </ol>
 
          <video autoPlay controls>
             <source src='/how-to-use-windows.mp4' />
          </video>
-      </ol>
+      </div>
    )
 }
