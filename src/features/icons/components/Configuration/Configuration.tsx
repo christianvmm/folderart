@@ -168,6 +168,24 @@ export function Configuration({
             </select>
          </div>
 
+         <div className='flex flex-col gap-2'>
+            <label htmlFor='scaleRange' className='text-sm font-medium flex items-center gap-2'>
+               Zoom: <span id='scaleValue'>{Math.round(configuration.scaleFactor * 100)}%</span>
+            </label>
+
+            <input
+               type='range'
+               id='scaleRange'
+               min='0.75'
+               max='1.25'
+               value={configuration.scaleFactor}
+               onChange={(e) => {
+                  onChangeConfig({ scaleFactor: e.target.valueAsNumber })
+               }}
+               step='0.01'
+            />
+         </div>
+
          <ul className='grid grid-cols-6 lg:grid-cols-7 gap-1'>
             {defaultIcons.map((icon, i) => {
                const selected = configuration.icon === icon.name
@@ -187,7 +205,7 @@ export function Configuration({
                         priority
                         alt={`${icon.name} icon`}
                         src={icon.src}
-                        className='w-full h-full'
+                        className='w-full h-auto aspect-square'
                      />
                   </li>
                )

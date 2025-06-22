@@ -24,6 +24,7 @@ export type Config = {
    icon?: File | string
    text: string
    variant: Variant
+   scaleFactor: number
 }
 
 export type Canvas = {

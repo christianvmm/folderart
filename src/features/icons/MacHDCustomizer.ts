@@ -5,9 +5,10 @@ import * as THREE from 'three'
 export class MacHDCustomizer extends IconCustomizer {
    protected get constraints() {
       return {
-         maxWidth: 500,
-         maxHeight: 384,
-         preferredSize: 384,
+         maxWidth: 500 * this.config.scaleFactor,
+         maxHeight: 384 * this.config.scaleFactor,
+         preferredSize: 384 * this.config.scaleFactor,
+
          startY: 50,
          folderAreaHeight: 700,
       }

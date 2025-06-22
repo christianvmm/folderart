@@ -23,6 +23,7 @@ export function FolderEditor() {
    const [configuration, setConfiguration] = useState<Config>({
       ...defaultMacOs,
       adjustColor: 1,
+      scaleFactor: 1,
       icon: '',
       text: '',
    })

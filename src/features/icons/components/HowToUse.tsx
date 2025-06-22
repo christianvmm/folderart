@@ -45,7 +45,7 @@ export function HowToUse({ os }: { os: IconType }) {
                      How to use ({os === 'mac-os' ? 'macOS' : 'Windows'})
                   </h1>
 
-                  {os === 'mac-os' ? <MacOS /> : <Windows />}
+                  {open ? os === 'mac-os' ? <MacOS /> : <Windows /> : null}
                </div>
             </div>
          </div>
