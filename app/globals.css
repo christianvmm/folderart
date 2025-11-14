@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.loader {
+   width: 60px;
+   aspect-ratio: 4;
+   background: radial-gradient(circle closest-side, #000 90%, #0000) 0 /
+      calc(100% / 3) 100% space;
+   clip-path: inset(0 100% 0 0);
+   animation: l1 1s steps(4) infinite;
+}
+@keyframes l1 {
+   to {
+      clip-path: inset(0 -34% 0 0);
+   }
+}
+
+main{
+   transition: background-color 1s, color 1s;
+}
+
+.dark{
+   background-color: #363636;
+   color: #fff;
+}
+
+.editor{
+   background-color: #fff;
+   color: #000;
+}
+
+select{
+   background-color: #fff;
+   color: #000;
+}
+
+.editor{
+   box-shadow: 0 0 20px 0 #00000066;
+   left: 0;
+   animation: slideInFromLeft 1s cubic-bezier(0.175, 0.485, 0.32, 1.275)
+}
+
+/* create custom animation to make the .editor slide in from left side */
+@keyframes slideInFromLeft {
+   0% {
+      transform: translateX(-100%);
+      opacity: 0;
+   }
+   100% {
+      transform: translateX(0);
+      opacity: 1;
+   }
+}
+
+@keyframes scaleIn {
+   0% {
+      scale: 0;
+      opacity: 0;
+   }
+   100% {
+      scale: 1;
+      opacity: 1;
+   }
+}
+
+.icon-preview{
+   /* shadow of the png */
+   filter: drop-shadow(0 0 20px #00000033);
+   animation: scaleIn 1s cubic-bezier(0.175, 0.485, 0.32, 1.275);
+   transition: color 1s;
+}
+
+Image{
+   transition: all 1s ease-in-out;
+}
+
+ol a{
+   color: #099;
+   text-decoration: underline;
+}
